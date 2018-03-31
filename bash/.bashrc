@@ -90,7 +90,6 @@ alias vi="/usr/bin/vim"
 alias v='/usr/bin/vim'
 alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
 alias ssh="/usr/bin/ssh -Y"
-alias ll="/usr/bin/ls -l"
 alias vi="/usr/bin/vim"
 alias rm="/usr/bin/rm -i"
 alias cp="/usr/bin/cp -i"
