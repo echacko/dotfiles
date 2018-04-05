@@ -238,12 +238,12 @@ endif
 " \'b': [ promptline#slices#host(), promptline#slices#user() ],
 let g:promptline_preset = {
 	\'a': [ promptline#slices#host({ 'only_if_ssh': 1 }) ],
-	\'b': [ promptline#slices#user() ],
+	\'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
 	\'c': [ promptline#slices#cwd() ],
 	\'x': [ promptline#slices#vcs_branch() ],
 	\'z': [ promptline#slices#git_status() ],
 	\'warn' : [ promptline#slices#last_exit_code() ]}
-let g:promptline_theme = 'base16'
+let g:promptline_theme = 'airline'
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
