@@ -42,6 +42,7 @@ call vundle#begin()
     Plugin 'Townk/vim-autoclose'            " For auto-close feature
     Plugin 'andviro/flake8-vim'             " Python Syntax check
 	Plugin 'terryma/vim-multiple-cursors'   " Multiple cursors work
+    Plugin 'sjl/gundo.vim'                  " Visualize undo tree
 	" Plugin 'altercation/vim-colors-solarized.git' " Solarized theme
 	" Plugin 'Shougo/neocomplete'                   " Automatic keyword completion
 	" Plugin 'Shougo/unite.vim'                     " Find files and buffers using ag
@@ -55,14 +56,6 @@ call vundle#begin()
 call vundle#end()
 filetype plugin indent on      " load filetype-specific indent files, detects filetypes
 "}}}
-
-"  " Pathogen {{{
-   "   let g:pathogen_disabled = []
-"  " call add(g:pathogen_disabled, 'youcompleteme')
-   "   execute pathogen#infect()
-
-"} " }}
-
 
 " Colors {{{
 syntax enable                   " enable syntax processing
@@ -145,11 +138,10 @@ endif
 " noremap <silent> <C-e> :Vexplore<CR>
 " }}}
 
-
 " Custom Keymappings {{{
 "
 " Map leader
-let leader = ','
+" let mapleader = ','
 
 " Turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
@@ -251,3 +243,4 @@ let g:NERDTreeQuitOnOpen = 1
 
 " }}}
 
+" vim:foldmethod=marker:foldlevel=0
