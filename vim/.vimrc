@@ -13,48 +13,38 @@ filetype off
 
 "}}}
 
-" Vundle Plugins {{{
+" Vim-Plug Plugins {{{
+" 
+" Download vim-plug if not already there.
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " Brief help
-" :PluginList			- lists configured plugins
-" :PluginInstall		- installs plugins
-" :PluginUpdate			- Update Plugins
-" :PluginSearch foo		- searches for foo; append `!` to refresh local cache
-" :PluginClean			- confirms removal of unused plugins
+" :PlugInstall - installs plugins
+" :PlugUpdate  - Update Plugins
+" :PlugClean   - confirms removal of unused plugins
+" :PlugUpgrade - upgrade vim                        - plug
 "
-" see :h vundle for more details or wiki for FAQ
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-	" let Vundle manage Vundle, required
-	Plugin 'gmarik/Vundle.vim'
+call plug#begin()
 
-	"Put your non-Plugin stuff after this line
-	Plugin 'scrooloose/nerdtree'            " File Explorer
-	Plugin 'jlanzarotta/bufexplorer'        " Buffer Explorer :BufExplore
-	Plugin 'godlygeek/tabular'              " Text alignment
-	Plugin 'tpope/vim-fugitive'             " Git wrapper
-	Plugin 'tpope/vim-surround'             " Manipulate quotes and brackets
-	Plugin 'tpope/vim-sensible'             " Some default settings
-	Plugin 'vim-airline/vim-airline'        " Pretty statusbar
-	Plugin 'vim-airline/vim-airline-themes' " Pretty statusbar
-	Plugin 'edkolev/promptline.vim'         " Prompt generator for bash
-    Plugin 'chriskempson/base16-vim'        " Base-16 theme
-    Plugin 'Townk/vim-autoclose'            " For auto-close feature
-    Plugin 'andviro/flake8-vim'             " Python Syntax check
-	Plugin 'terryma/vim-multiple-cursors'   " Multiple cursors work
-    Plugin 'sjl/gundo.vim'                  " Visualize undo tree
-	" Plugin 'altercation/vim-colors-solarized.git' " Solarized theme
-	" Plugin 'Shougo/neocomplete'                   " Automatic keyword completion
-	" Plugin 'Shougo/unite.vim'                     " Find files and buffers using ag
-	" Plugin 'Shougo/vimfiler.vim'                  " File Explorer :VimFiler
-	" Plugin 'majutsushi/tagbar'                    " Display tags in a window
-	" Plugin 'scrooloose/syntastic'                 " Syntax checking on write
-	" Plugin 'nathanaelkane/vim-indent-guides.git'  " Show tab/space guides
-
+	" Put your non-Plugin stuff after this line
+	Plug 'scrooloose/nerdtree'            " File Explorer
+	Plug 'jlanzarotta/bufexplorer'        " Buffer Explorer :BufExplore
+	Plug 'godlygeek/tabular'              " Text alignment
+	Plug 'tpope/vim-fugitive'             " Git wrapper
+	Plug 'tpope/vim-sensible'             " Some default settings
+	Plug 'vim-airline/vim-airline'        " Pretty statusbar
+	Plug 'vim-airline/vim-airline-themes' " Pretty statusbar
+	Plug 'edkolev/promptline.vim'         " Prompt generator for bash
+    Plug 'chriskempson/base16-vim'        " Base-16 theme
+    Plug 'Townk/vim-autoclose'            " For auto-close feature
+    Plug 'andviro/flake8-vim'             " Python Syntax check
 
   " All of your Plugins must be added before the following line
-call vundle#end()
-filetype plugin indent on      " load filetype-specific indent files, detects filetypes
+call plug#end()
 "}}}
 
 " Colors {{{
