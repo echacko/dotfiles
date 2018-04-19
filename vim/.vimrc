@@ -31,17 +31,17 @@ endif
 call plug#begin()
 
 	" Put your non-Plugin stuff after this line
-	Plug 'scrooloose/nerdtree'            " File Explorer
-	Plug 'jlanzarotta/bufexplorer'        " Buffer Explorer :BufExplore
-	Plug 'godlygeek/tabular'              " Text alignment
-	Plug 'tpope/vim-fugitive'             " Git wrapper
-	Plug 'tpope/vim-sensible'             " Some default settings
-	Plug 'vim-airline/vim-airline'        " Pretty statusbar
-	Plug 'vim-airline/vim-airline-themes' " Pretty statusbar
-	Plug 'edkolev/promptline.vim'         " Prompt generator for bash
-    Plug 'chriskempson/base16-vim'        " Base-16 theme
-    Plug 'Townk/vim-autoclose'            " For auto-close feature
-    Plug 'andviro/flake8-vim'             " Python Syntax check
+	Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
+	Plug 'jlanzarotta/bufexplorer'                          " Buffer Explorer :BufExplore
+	Plug 'godlygeek/tabular'                                " Text alignment
+	Plug 'tpope/vim-fugitive'                               " Git wrapper
+	Plug 'tpope/vim-sensible'                               " Some default settings
+	Plug 'vim-airline/vim-airline'                          " Pretty statusbar
+	Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
+	Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
+    Plug 'chriskempson/base16-vim'                          " Base-16 theme
+    Plug 'Townk/vim-autoclose'                              " For auto-close feature
+    Plug 'andviro/flake8-vim', { 'for' : 'python' }         " Python Syntax check
 
   " All of your Plugins must be added before the following line
 call plug#end()
@@ -194,6 +194,7 @@ cnoremap Q q
 cnoremap qq q
 cnoremap W w
 cnoremap ww w
+
 " }}}
 
 " Plugin configs {{{
@@ -219,12 +220,12 @@ endif
 " Promptline
 " \'b': [ promptline#slices#host(), promptline#slices#user() ],
 let g:promptline_preset = {
-	\'a': [ promptline#slices#host({ 'only_if_ssh': 1 }) ],
-	\'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
-	\'c': [ promptline#slices#cwd() ],
-	\'x': [ promptline#slices#vcs_branch() ],
-	\'z': [ promptline#slices#git_status() ],
-	\'warn' : [ promptline#slices#last_exit_code() ]}
+    \'a': [ promptline#slices#host({ 'only_if_ssh': 1 }) ],
+    \'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
+    \'c': [ promptline#slices#cwd() ],
+    \'x': [ promptline#slices#vcs_branch() ],
+    \'z': [ promptline#slices#git_status() ],
+    \'warn' : [ promptline#slices#last_exit_code() ]}
 let g:promptline_theme = 'airline'
 
 " NERDTree
