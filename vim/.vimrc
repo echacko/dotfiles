@@ -150,7 +150,7 @@ nnoremap <S-j> <S-v> j
 nnoremap <S-k> <S-v> k
 
 " Open file browser
-nnoremap <leader>e :NERDTreeFind<CR>
+nnoremap <leader>e :NERDTreeToggle<CR>
 
 " Forgot sudo??
 cmap w!! %!sudo tee  %
