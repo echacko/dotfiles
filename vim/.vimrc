@@ -222,7 +222,7 @@ endif
 let g:promptline_preset = {
     \'a': [ promptline#slices#host({ 'only_if_ssh': 1 }) ],
     \'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
-    \'c': [ promptline#slices#cwd() ],
+    \'c': [ promptline#slices#cwd({ 'dir_limit': 1 }) ],
     \'x': [ promptline#slices#vcs_branch() ],
     \'z': [ promptline#slices#git_status() ],
     \'warn' : [ promptline#slices#last_exit_code() ]}
