@@ -14,12 +14,12 @@ filetype off
 "}}}
 
 " Vim-Plug Plugins {{{
-" 
+"
 " Download vim-plug if not already there.
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Brief help
@@ -28,23 +28,47 @@ endif
 " :PlugClean   - confirms removal of unused plugins
 " :PlugUpgrade - upgrade vim                        - plug
 "
+
+" Function to install YCM
+function! BuildYCM(info)
+    " info is a dictionary with 3 fields
+    " - name:   name of the plugin
+    " - status: 'installed', 'updated', or 'unchanged'
+    " - force:  set on PlugInstall! or PlugUpdate!
+    if a:info.status == 'installed' || a:info.force
+        !./install.py
+    endif
+endfunction
+
 call plug#begin()
-
-	" Put your non-Plugin stuff after this line
-	Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
-	Plug 'jlanzarotta/bufexplorer'                          " Buffer Explorer :BufExplore
-	Plug 'godlygeek/tabular'                                " Text alignment
-	Plug 'tpope/vim-fugitive'                               " Git wrapper
-	Plug 'tpope/vim-sensible'                               " Some default settings
-	Plug 'vim-airline/vim-airline'                          " Pretty statusbar
-	Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
-	Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
-    Plug 'chriskempson/base16-vim'                          " Base-16 theme
-    Plug 'Townk/vim-autoclose'                              " For auto-close feature
-    Plug 'andviro/flake8-vim', { 'for' : 'python' }         " Python Syntax check
-
-  " All of your Plugins must be added before the following line
+" Put your non-Plugin stuff after this line
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
+Plug 'jlanzarotta/bufexplorer'                          " Buffer Explorer :BufExplore
+Plug 'godlygeek/tabular'                                " Text alignment
+Plug 'tpope/vim-fugitive'                               " Git wrapper
+Plug 'tpope/vim-sensible'                               " Some default settings
+Plug 'vim-airline/vim-airline'                          " Pretty statusbar
+Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
+Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
+Plug 'chriskempson/base16-vim'                          " Base-16 theme
+Plug 'Townk/vim-autoclose'                              " For auto-close feature
+Plug 'andviro/flake8-vim', { 'for' : 'python' }         " Python Syntax check
+" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'on': []}
+Plug 'maralla/completor.vim', { 'on': [] }
+Plug 'SirVer/ultisnips', { 'on': [] }
+Plug 'honza/vim-snippets', { 'on': [] }
+Plug 'ervandew/supertab', { 'on': [] }
+" All of your Plugins must be added before the following line
 call plug#end()
+
+" Autocmd to load YCM and ultisnips
+augroup load_us_ycm
+    autocmd!
+    autocmd InsertEnter *.py call plug#load('completor.vim', 'supertab')
+    autocmd InsertEnter *.py call plug#load('ultisnips', 'vim-snippets')
+    " autocmd! load_us_ycm
+augroup END
+
 "}}}
 
 " Colors {{{
@@ -114,7 +138,7 @@ set foldlevelstart=10 " start with fold level of 1
 
 " Vimdiff {{{
 if &diff
-	set diffopt=filler,foldcolumn:0
+    set diffopt=filler,foldcolumn:0
 endif
 " }}}
 
@@ -197,6 +221,14 @@ cnoremap ww w
 
 " }}}
 
+" {{{ Autocmds
+" Some general autocmd
+"
+" Clear trailing space while leaving insertmode.
+au! InsertLeave %s/\s\+$//e
+
+" }}}
+
 " Plugin configs {{{
 "
 "  vim-airline
@@ -204,33 +236,52 @@ let g:airline_inactive_collapse = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 if has("gui_win32") || &term == "xterm"
-"if &term == "xterm"
-	let g:airline_powerline_fonts = 0
-	let g:airline_symbols = {}
-	let g:airline_left_sep = ''
-	let g:airline_left_sep = ''
-	let g:airline_right_sep = ''
-	let g:airline_right_sep = ''
-	let g:airline_theme = 'base16'
+    "if &term == "xterm"
+    let g:airline_powerline_fonts = 0
+    let g:airline_symbols = {}
+    let g:airline_left_sep = ''
+    let g:airline_left_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_theme = 'base16'
 else
-	let g:airline_powerline_fonts = 1
-	let g:airline_theme = 'base16'
+    let g:airline_powerline_fonts = 1
+    let g:airline_theme = 'base16'
 endif
 
 " Promptline
 " \'b': [ promptline#slices#host(), promptline#slices#user() ],
 let g:promptline_preset = {
-    \'a': [ promptline#slices#host({ 'only_if_ssh': 1 }) ],
-    \'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
-    \'c': [ promptline#slices#cwd({ 'dir_limit': 1 }) ],
-    \'x': [ promptline#slices#vcs_branch() ],
-    \'z': [ promptline#slices#git_status() ],
-    \'warn' : [ promptline#slices#last_exit_code() ]}
+            \'a': [ promptline#slices#host({ 'only_if_ssh': 1 }) ],
+            \'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
+            \'c': [ promptline#slices#cwd({ 'dir_limit': 1 }) ],
+            \'x': [ promptline#slices#vcs_branch() ],
+            \'z': [ promptline#slices#git_status() ],
+            \'warn' : [ promptline#slices#last_exit_code() ]}
 let g:promptline_theme = 'airline'
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeQuitOnOpen = 1
+
+" make YCM compatible with UltiSnips (using supertab)
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" " better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<Tab>"
+let g:UltiSnipsJumpForwardTrigger = "<Tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+
+" completor
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+" Prevent auto trigger of complete
+"let g:completor_auto_trigger = 0
+"inoremap <expr> <Tab> pumvisible() ? "<C-N>" : "<C-R>=completor#do('complete')<CR>"
+let g:completor_min_chars = 2
 
 " }}}
 
