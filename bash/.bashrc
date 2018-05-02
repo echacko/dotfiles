@@ -75,8 +75,8 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 	export LS_OPTIONS='--color=auto'
 	alias l='ls $LS_OPTIONS'
-	alias ll='ls $LS_OPTIONS -l -N -F'
-	alias ls='ls $LS_OPTIONS -A -N -hF'
+	alias ll='ls $LS_OPTIONS -l -N -hF'
+	alias ls='ls $LS_OPTIONS -N -hF'
 fi
 
 alias grep='grep --color=auto'
