@@ -75,7 +75,7 @@ augroup END
 syntax enable                   " enable syntax processing
 let base16colorspace=256        " Access colors present in 256 colorspace
 let g:hybrid_use_Xresources = 1
-colorscheme base16-default-dark " Enable the base16 color scheme
+colorscheme base16-ashes " Enable the base16 color scheme
 
 " Transpancey for text and buffer
 hi Normal ctermfg=250 ctermbg=none
@@ -183,14 +183,7 @@ cmap w!! %!sudo tee  %
 nnoremap <leader>n :bn<CR>
 nnoremap <leader>p :bp<CR>
 nnoremap <leader><Tab> :b#<CR>
-nnoremap <C-Tab> :bn<CR>
-nnoremap <C-S-Tab> :bp<CR>
-nnoremap <C-Right> :bn<CR>
-nnoremap <C-Left> :bp<CR>
-nnoremap <M-Right> :bn<CR>
-nnoremap <M-Left> :bp<CR>
-nnoremap <M-n> :bn<CR>
-nnoremap <M-p> :bp<CR>
+
 " Spell checking
 nnoremap <leader>s :set spell!<CR>
 " Show tabs
@@ -246,7 +239,7 @@ if has("gui_win32") || &term == "xterm"
     let g:airline_theme = 'base16'
 else
     let g:airline_powerline_fonts = 1
-    let g:airline_theme = 'base16'
+    let g:airline_theme = 'base16_ashes'
 endif
 
 " Promptline
@@ -256,8 +249,8 @@ let g:promptline_preset = {
             \'b': [ promptline#slices#conda_env(), promptline#slices#user() ],
             \'c': [ promptline#slices#cwd({ 'dir_limit': 1 }) ],
             \'x': [ promptline#slices#vcs_branch() ],
-            \'z': [ promptline#slices#git_status() ],
-            \'warn' : [ promptline#slices#last_exit_code() ]}
+            \'z': [ promptline#slices#git_status() ]}
+            " \'warn' : [ promptline#slices#last_exit_code() ]}
 let g:promptline_theme = 'airline'
 
 " NERDTree
