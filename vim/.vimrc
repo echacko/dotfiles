@@ -218,7 +218,7 @@ cnoremap ww w
 " Some general autocmd
 "
 " Clear trailing space while leaving insertmode.
-au! InsertLeave %s/\s\+$//e
+au! BufWritePre %s/\s\+$//e
 
 " }}}
 
