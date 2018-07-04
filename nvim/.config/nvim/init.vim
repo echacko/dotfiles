@@ -44,6 +44,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
+Plug 'jlanzarotta/bufexplorer'
 " All of your Plugins must be added before the following line
 call plug#end()
  " }}}
@@ -94,6 +95,7 @@ set showcmd        " show command on last line of screen
 set showmatch      " show bracket matches
 set wildmenu       " enhanced cmd line completion
 set wildchar=<TAB> " key for line completion
+au FileType tex set tw=80
 " }}}
 
 " Searching {{{
@@ -258,10 +260,21 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
 
+let g:vimtex_view_method = 'zathura'
+let g:Tex_IgnoredWarnings = 
+	\"Underfull\n".
+	\"Overfull\n".
+	\"specifier changed to\n".
+	\"You have requested\n".
+	\"Missing number, treated as zero.\n".
+	\"There were undefined references\n"
+	\"Citation %.%# undefined\n"
+	\"You should perhaps use"	
+let g:Tex_IgnoreLevel = 8
  " }}}
 
 " vim:foldmethod=marker:foldlevel=0
