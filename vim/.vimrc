@@ -29,17 +29,6 @@ endif
 " :PlugUpgrade - upgrade vim                        - plug
 "
 
-" Function to install YCM
-function! BuildYCM(info)
-    " info is a dictionary with 3 fields
-    " - name:   name of the plugin
-    " - status: 'installed', 'updated', or 'unchanged'
-    " - force:  set on PlugInstall! or PlugUpdate!
-    if a:info.status == 'installed' || a:info.force
-        !./install.py
-    endif
-endfunction
-
 call plug#begin()
 " Put your non-Plugin stuff after this line
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
@@ -52,22 +41,17 @@ Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
 Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
 Plug 'chriskempson/base16-vim'                          " Base-16 theme
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'andviro/flake8-vim', { 'for' : 'python' }         " Python Syntax check
-" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'on': []}
-Plug 'maralla/completor.vim', { 'on': [] }
-Plug 'SirVer/ultisnips', { 'on': [] }
-Plug 'honza/vim-snippets', { 'on': [] }
-Plug 'ervandew/supertab', { 'on': [] }
+Plug 'w0rp/ale', { 'for' : ['python', 'tex', 'plaintex'] }
+Plug 'lervag/vimtex', { 'for' : ['tex', 'plaintex'] }
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
 " All of your Plugins must be added before the following line
 call plug#end()
 
-" Autocmd to load YCM and ultisnips
-augroup load_us_ycm
-    autocmd!
-    autocmd InsertEnter *.py call plug#load('completor.vim', 'supertab')
-    autocmd InsertEnter *.py call plug#load('ultisnips', 'vim-snippets')
-    " autocmd! load_us_ycm
-augroup END
 
 "}}}
 
@@ -97,6 +81,7 @@ set smarttab        " <BS> removes shiftwidth spaces
 " Misc {{{
 set ttyfast                     " faster redraw
 set backspace=indent,eol,start
+let g:tex_flavor='latex'        " For laetx filetype
 " }}}
 
 " UI {{{
@@ -113,6 +98,8 @@ set showcmd        " show command on last line of screen
 set showmatch      " show bracket matches
 set wildmenu       " enhanced cmd line completion
 set wildchar=<TAB> " key for line completion
+set cc=115         " Right margin
+autocmd FileType tex,python,sh,c set tw=90 " Line width
 " }}}
 
 " Searching {{{
@@ -257,24 +244,37 @@ let g:promptline_theme = 'airline'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeQuitOnOpen = 1
 
-" make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+" ALE
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_enter = 0
+let g:airline#extensions#ale#enabled = 1
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-" " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<Tab>"
-let g:UltiSnipsJumpForwardTrigger = "<Tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 
-" completor
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
-" Prevent auto trigger of complete
-"let g:completor_auto_trigger = 0
-"inoremap <expr> <Tab> pumvisible() ? "<C-N>" : "<C-R>=completor#do('complete')<CR>"
-let g:completor_min_chars = 2
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+
+" Plugin key-mappings.
+let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" vim-tex
+let g:vimtex_view_method = 'zathura'
 
 " }}}
 
