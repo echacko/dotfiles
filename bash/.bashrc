@@ -82,6 +82,11 @@ fi
 alias grep='grep --color=auto'
 export LESS="-R"
 
+# lesspip
+if [ -x /usr/bin/lesspipe ]; then
+    eval "$(lesspipe)"
+fi
+
 
 ## Aliases
 #
