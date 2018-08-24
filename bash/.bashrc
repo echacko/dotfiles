@@ -5,7 +5,7 @@
 
 # Source global definitions
 if [ -f /etc/bash.bashrc ]; then
-	. /etc/bash.bashrc
+    . /etc/bash.bashrc
 fi
 
 export EDITOR='vim'
@@ -33,7 +33,7 @@ COL="$COLC"						# Regular user
 # Add car return and change the title of the window to the current P1
 function __promptadd
 {
-	XTITLE='\[\e]0;\s (\w)\a\]'
+    XTITLE='\[\e]0;\s (\w)\a\]'
     PS1="$XTITLE$PS1\n$COL \\$ $COLN"
 }
 
@@ -45,7 +45,7 @@ function prompt_line
 
 function prompt_term
 {
-	# GIT vars
+    # GIT vars
     GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWSTASHSTATE=1
     GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -55,29 +55,29 @@ function prompt_term
         source ~/.bash_git
     fi
 
-    # Prompt 
-	PROMPT_COMMAND=""
+    # Prompt
+    PROMPT_COMMAND=""
     PS1="$COLV--[$COLC\h$COLV]-[$COLA\w$COLV]\$(__git_ps1)\n$COL \\$ $COLN"
 }
 
-# Add the new prompt 
+# Add the new prompt
 case "$TERM" in
-  rxvt* | *-256color | xterm-termite)
-	  prompt_line
-    ;;
-  *)
-	  prompt_term
-    ;;
+    rxvt* | *-256color | xterm-termite)
+        prompt_line
+        ;;
+    *)
+        prompt_term
+        ;;
 esac
 
 # Colors
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	export LS_OPTIONS='--color=auto'
-	alias l='ls $LS_OPTIONS'
-	alias ll='ls $LS_OPTIONS -l -N -hF'
-	alias ls='ls $LS_OPTIONS -N -hF'
 fi
+export LS_OPTIONS='--color=auto'
+alias l='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -lrt -N -hF'
+alias ls='ls $LS_OPTIONS -N -hF'
 
 alias grep='grep --color=auto'
 export LESS="-R"
