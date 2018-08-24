@@ -62,7 +62,7 @@ function prompt_term
 
 # Add the new prompt 
 case "$TERM" in
-  rxvt* | screen-256color | xterm-termite)
+  rxvt* | *-256color | xterm-termite)
 	  prompt_line
     ;;
   *)
@@ -86,25 +86,21 @@ export LESS="-R"
 ## Aliases
 #
 
-alias vi="/usr/bin/vim"
-alias v='/usr/bin/vim'
+alias vi="vim"
+alias v='vim'
 alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
-alias ssh="/usr/bin/ssh -Y"
-alias vi="/usr/bin/vim"
-alias rm="/usr/bin/rm -i"
-alias cp="/usr/bin/cp -i"
-alias mv="/usr/bin/mv -i"
+alias ssh="ssh -Y"
+alias vi="vim"
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
 alias sudo='sudo '
 alias h='history'
 alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
-alias Rmatlab="/usr/bin/ssh -Yf echacko@rudra 'xterm matlab'"
-alias Rgummi="/usr/bin/ssh -Yf echacko@ravan 'xterm gummi'"
-alias bhairav="ssh -i ~/.ssh/bhairav_rsa echacko@bhairav"
-alias rudra="ssh  chacko@rudra"
 alias xo='~/Scripts/xo.sh '
-alias aa="source /opt/anaconda/bin/activate"
+alias aa="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/Scripts/extract.sh'
