@@ -5,7 +5,7 @@
 
 # Source global definitions
 if [ -f /etc/bash.bashrc ]; then
-	. /etc/bash.bashrc
+    . /etc/bash.bashrc
 fi
 
 export EDITOR='vim'
@@ -33,7 +33,7 @@ COL="$COLC"						# Regular user
 # Add car return and change the title of the window to the current P1
 function __promptadd
 {
-	XTITLE='\[\e]0;\s (\w)\a\]'
+    XTITLE='\[\e]0;\s (\w)\a\]'
     PS1="$XTITLE$PS1\n$COL \\$ $COLN"
 }
 
@@ -45,7 +45,7 @@ function prompt_line
 
 function prompt_term
 {
-	# GIT vars
+    # GIT vars
     GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWSTASHSTATE=1
     GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -55,56 +55,57 @@ function prompt_term
         source ~/.bash_git
     fi
 
-    # Prompt 
-	PROMPT_COMMAND=""
+    # Prompt
+    PROMPT_COMMAND=""
     PS1="$COLV--[$COLC\h$COLV]-[$COLA\w$COLV]\$(__git_ps1)\n$COL \\$ $COLN"
 }
 
-# Add the new prompt 
+# Add the new prompt
 case "$TERM" in
-  rxvt* | screen-256color | xterm-termite)
-	  prompt_line
-    ;;
-  *)
-	  prompt_term
-    ;;
+    rxvt* | *-256color | xterm-termite)
+        prompt_line
+        ;;
+    *)
+        prompt_term
+        ;;
 esac
 
 # Colors
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	export LS_OPTIONS='--color=auto'
-	alias l='ls $LS_OPTIONS'
-	alias ll='ls $LS_OPTIONS -l -N -hF'
-	alias ls='ls $LS_OPTIONS -N -hF'
 fi
+export LS_OPTIONS='--color=auto'
+alias l='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -lrt -N -hF'
+alias ls='ls $LS_OPTIONS -N -hF'
 
 alias grep='grep --color=auto'
 export LESS="-R"
+
+# lesspip
+if [ -x /usr/bin/lesspipe ]; then
+    eval "$(lesspipe)"
+fi
 
 
 ## Aliases
 #
 
-alias vi="/usr/bin/vim"
-alias v='/usr/bin/vim'
+alias vi="vim"
+alias v='vim'
 alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
-alias ssh="/usr/bin/ssh -Y"
-alias vi="/usr/bin/vim"
-alias rm="/usr/bin/rm -i"
-alias cp="/usr/bin/cp -i"
-alias mv="/usr/bin/mv -i"
+alias ssh="ssh -Y"
+alias vi="vim"
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
 alias sudo='sudo '
 alias h='history'
 alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
-alias Rmatlab="/usr/bin/ssh -Yf echacko@rudra 'xterm matlab'"
-alias Rgummi="/usr/bin/ssh -Yf echacko@ravan 'xterm gummi'"
-alias bhairav="ssh -i ~/.ssh/bhairav_rsa echacko@bhairav"
-alias rudra="ssh  chacko@rudra"
 alias xo='~/Scripts/xo.sh '
-alias aa="source /opt/anaconda/bin/activate"
+alias aa="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/Scripts/extract.sh'
