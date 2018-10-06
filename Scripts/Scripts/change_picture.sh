@@ -16,8 +16,11 @@ total=$(ls -1 $PIC_DIR | wc -l)    # Total number of images
 file_num=$((RANDOM % total))
 image_file=$(ls -1 $PIC_DIR/ | sed -n "$file_num p")
 
-cp -f $PIC_DIR/$image_file /usr/share/pixmaps/login.png
-cp -f $PIC_DIR/$image_file /home/echacko/.i3/images/lock.png
+# Convert file to png
+convert $PIC_DIR/$image_file $PIC_DIR/lockNlogin.png
+
+cp -f $PIC_DIR/lockNlogin.png /usr/share/pixmaps/login.png
+cp -f $PIC_DIR/lockNlogin.png /home/echacko/.config/i3/lock.png
 
 # Now set the wallpaper
 feh --randomize --bg-fill $PIC_DIR/*
