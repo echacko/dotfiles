@@ -1,3 +1,4 @@
 vim/.vim/*
 nvim/.config/nvim/*
 !vim/.vim/colors
+i3/.conifg/i3/lock.png
