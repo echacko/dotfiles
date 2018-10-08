@@ -17,7 +17,7 @@ file_num=$((RANDOM % total))
 image_file=$(ls -1 $PIC_DIR/ | sed -n "$file_num p")
 
 # Convert file to png
-convert $PIC_DIR/$image_file $PIC_DIR/lockNlogin.png
+convert $PIC_DIR/$image_file -resize 1366x900 $PIC_DIR/lockNlogin.png
 
 cp -f $PIC_DIR/lockNlogin.png /usr/share/pixmaps/login.png
 cp -f $PIC_DIR/lockNlogin.png /home/echacko/.config/i3/lock.png
