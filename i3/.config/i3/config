@@ -37,6 +37,8 @@ focus_follows_mouse no
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# Start a browser
+bindsym $mod+b exec firefox
 # kill focused window
 bindsym $mod+q kill
 
@@ -54,6 +56,15 @@ bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# Show the sup-mail scratchpad window, if any.
+# bindsym mod4+s [title="^Sup ::"] scratchpad show
 
 # split orientation
 bindsym $mod+$mod1+h split h;exec notify-send 'Tile horizontally'
