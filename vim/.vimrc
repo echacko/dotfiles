@@ -41,7 +41,7 @@ Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
 Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
 Plug 'chriskempson/base16-vim'                          " Base-16 theme
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'w0rp/ale', { 'for' : ['python', 'tex', 'plaintex'] }
+Plug 'w0rp/ale', { 'for' : ['cpp', 'python', 'tex', 'plaintex'] }
 Plug 'lervag/vimtex', { 'for' : ['tex', 'plaintex'] }
 Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
@@ -49,6 +49,9 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 " All of your Plugins must be added before the following line
 call plug#end()
 
@@ -98,8 +101,8 @@ set showcmd        " show command on last line of screen
 set showmatch      " show bracket matches
 set wildmenu       " enhanced cmd line completion
 set wildchar=<TAB> " key for line completion
-set cc=115         " Right margin
-autocmd FileType tex,python,sh,c set tw=90 " Line width
+set cc=80          " Right margin
+autocmd FileType tex,python,sh,c set tw=75 " Line width
 " }}}
 
 " Searching {{{
@@ -199,6 +202,8 @@ cnoremap qq q
 cnoremap W w
 cnoremap ww w
 
+" Run make
+map <f9> :make<CR>
 " }}}
 
 " {{{ Autocmds
@@ -251,6 +256,11 @@ let g:airline#extensions#ale#enabled = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'cpp' : ['clang-format'],
+\}
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -275,6 +285,22 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " vim-tex
 let g:vimtex_view_method = 'zathura'
+
+" enable gtags module
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+
+" config project root markers.
+let g:gutentags_project_root = ['.root']
+
+" generate datebases in my cache directory, prevent gtags files
+" polluting my project
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" forbid gutentags adding gtags databases
+let g:gutentags_auto_add_gtags_cscope = 0
+
+" Make CtrlP load faster by making it skip files inside .gitignore
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " }}}
 
