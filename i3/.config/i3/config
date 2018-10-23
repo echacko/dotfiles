@@ -35,7 +35,7 @@ focus_follows_mouse no
 ####
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec $terminal
 
 # Start a browser
 bindsym $mod+b exec firefox
