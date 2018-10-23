@@ -91,8 +91,8 @@ fi
 ## Aliases
 #
 
-alias vi="vim"
-alias v='vim'
+alias vi="vim --servername=VIM"
+alias v="vim --servername=VIM"
 alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
 alias ssh="ssh -Y"
 alias vi="vim"
@@ -109,3 +109,4 @@ alias aa="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/Scripts/extract.sh'
+alias convert-to-pdf="libreoffice --headless --convert-to pdf "
