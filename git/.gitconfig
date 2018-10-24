@@ -3,46 +3,51 @@
 	name = echacko
 
 [color]
-    ui = true
+	ui = true
 [color "branch"]
-    current = green bold
-    remote = red bold
+	current = green bold
+	remote = red bold
 [color "diff"]
-    meta = yellow
-    frag = cyan bold
-    old = red bold
-    new = green bold
+	meta = yellow
+	frag = cyan bold
+	old = red bold
+	new = green bold
 [color "status"]
-    added = green bold
-    changed = red bold
-    untracked = red bold
+	added = green bold
+	changed = red bold
+	untracked = red bold
+
 [core]
-    editor = vim
-    excludesfile = /home/echacko/.gitignore_global
-    autocrlf = input
+	editor = vim
+	excludesfile = /home/echacko/.gitignore_global
+	autocrlf = input
 
 [github]
-    user = echacko
+	user = echacko
 
 [diff]
-    tool = vimdiff
+	tool = vimdiff
 [difftool]
-    prompt = false
+	prompt = false
+
 [merge]
-    tool = vimdiff
+	tool = vimdiff
 [mergetool]
-    keepBackup = false
+	keepBackup = false
 
 [credential]
-    helper = cache --timeout=3600
+	helper = cache --timeout=3600
+
 [format]
-    pretty = oneline
+	pretty = oneline
+
 [push]
 	default = matching
+
 [alias]
 	st = status -sb
 	ci = commit -v
 	co = checkout
-    last = log -1 HEAD
-    l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr%Creset' --graph
-    d = difftool
+	last = log -1 HEAD
+	l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr%Creset' --graph
+	d = difftool
