@@ -76,7 +76,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 export LS_OPTIONS='--color=auto'
 alias l='ls $LS_OPTIONS'
-alias ll='ls $LS_OPTIONS -lrt -N -hF'
+alias ll='ls $LS_OPTIONS -l -N -hF'
 alias ls='ls $LS_OPTIONS -N -hF'
 
 alias grep='grep --color=auto'
