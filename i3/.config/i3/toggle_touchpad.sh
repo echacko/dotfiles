@@ -1,0 +1,1 @@
+/home/echacko/Scripts/toggle_touchpad.sh
