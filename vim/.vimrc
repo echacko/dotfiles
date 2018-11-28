@@ -41,7 +41,7 @@ Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
 Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
 Plug 'chriskempson/base16-vim'                          " Base-16 theme
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'w0rp/ale', { 'for' : ['cpp', 'python', 'tex', 'plaintex'] }
+Plug 'w0rp/ale', { 'for' : ['cpp', 'python', 'tex', 'plaintex'] , 'on': 'ALEEnable'}
 Plug 'lervag/vimtex', { 'for' : ['tex', 'plaintex'] }
 Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
@@ -73,9 +73,9 @@ hi vertsplit ctermfg=250 ctermbg=none
 "}}}
 
 " Tabs {{{
-set tabstop=4       " number of visual spaces per TAB
-set softtabstop=4   " number of spaces in tab when editing
-set shiftwidth=4
+set tabstop=2       " number of visual spaces per TAB
+set softtabstop=2  " number of spaces in tab when editing
+set shiftwidth=2
 set expandtab       " Tabs are spaces
 set smarttab        " <BS> removes shiftwidth spaces
 
@@ -252,14 +252,16 @@ let g:NERDTreeQuitOnOpen = 1
 " ALE
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_enter = 0
+
+let g:ale_set_highlights = 0
+
 let g:airline#extensions#ale#enabled = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'cpp' : ['clang-format'],
+\   'cpp' : ['uncrustify'],
 \}
 
 " Use deoplete.
