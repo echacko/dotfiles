@@ -8,7 +8,7 @@
 	exit 1
 }
 
-[ ! -f "$@" ] && {
+[ ! -e "$@" ] && {
 	echo "xdg-open: file '$@' does not exist."
 	exit 1
 }
