@@ -132,6 +132,7 @@ bindsym $mod+m exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 bindsym XF86AudioRaiseVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume 0 +5%"
 bindsym XF86AudioLowerVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume 0 -5%"
 bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym Print exec "scrot -z ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png; notify-send 'Screenshot Captured'"
 
 ###
 # Workspace
@@ -289,6 +290,7 @@ new_float pixel 2
 for_window [window_role="pop-up"] floating enable,move absolute center
 for_window [class="(?i)feh"] floating enable, move absolute center
 for_window [class="(?i)Wicd-client.py"] floating enable, move absolute center
+for_window [class="(?i)File-roller"] floating enable, resize set 480 480
 
 # Assign Firefox to workspace 2
 assign [class="Firefox"] $ws2
@@ -301,7 +303,7 @@ assign [class="Thunderbird"]  $ws10
 # exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 
 #Wallpaper Config
-exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/*
+exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
 
 # Start autolock
 exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "~/.config/i3/dpms-i3lock.sh" -detectsleep
@@ -324,6 +326,10 @@ exec --no-startup-id $HOME/Scripts/xautolockstop.sh
 ###
 # Colours
 ###
+# Add below to line in bar { ... } to disable workspace switching while 
+# scrolling in i3bar region.
+#    wheel_down_cmd nop
+#    status_command i3blocks
 
 ## Base16 Default Dark
 # Author: Chris Kempson (http://chriskempson.com)
@@ -359,7 +365,12 @@ client.background       $base07
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
+# Add below to line to disable workspace switching while scrolling in i3bar 
+#    wheel_down_cmd nop
+#    status_command i3blocks
 bar {
+    wheel_up_cmd nop
+    wheel_down_cmd nop
     status_command i3blocks
 
     colors {
