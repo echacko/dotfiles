@@ -52,6 +52,7 @@ Plug 'honza/vim-snippets'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
+Plug 'luochen1990/rainbow'
 " All of your Plugins must be added before the following line
 call plug#end()
 
@@ -62,7 +63,7 @@ call plug#end()
 syntax enable                   " enable syntax processing
 let base16colorspace=256        " Access colors present in 256 colorspace
 let g:hybrid_use_Xresources = 1
-colorscheme base16-ashes " Enable the base16 color scheme
+colorscheme base16-pop " Enable the base16 color scheme
 
 " Transpancey for text and buffer
 hi Normal ctermfg=250 ctermbg=none
@@ -261,7 +262,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'cpp' : ['uncrustify'],
+\   'cpp' : ['clang-format'],
 \}
 
 " Use deoplete.
@@ -303,6 +304,8 @@ let g:gutentags_auto_add_gtags_cscope = 0
 
 " Make CtrlP load faster by making it skip files inside .gitignore
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+let g:rainbow_active = 1
 
 " }}}
 
