@@ -36,6 +36,7 @@ Plug 'jlanzarotta/bufexplorer'                          " Buffer Explorer :BufEx
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-sensible'                               " Some default settings
+Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'vim-airline/vim-airline'                          " Pretty statusbar
 Plug 'vim-airline/vim-airline-themes'                   " Pretty statusbar
 Plug 'edkolev/promptline.vim'                           " Prompt generator for bash
