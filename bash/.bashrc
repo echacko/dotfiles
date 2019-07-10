@@ -87,6 +87,12 @@ if [ -x /usr/bin/lesspipe ]; then
     eval "$(lesspipe)"
 fi
 
+# history
+HISTSIZE=5000
+HISTFILESIZE=100000
+HISTIGNORE="&:ls:exit:pwd:clear:mount:umount:[ \t]*:j *"
+shopt -s histappend
+
 
 ## Aliases
 #
