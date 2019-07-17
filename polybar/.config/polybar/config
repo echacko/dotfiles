@@ -33,10 +33,10 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 ; Enables pseudo-transparency for the bar
 ; If set to true the bar can be transparent without a compositor.
-pseudo-transparency = false
+pseudo-transparency = true
 
 line-size = 3
-line-color = #f00
+; line-color = #f00
 
 border-size = 2
 border-color = #00000000
@@ -63,43 +63,21 @@ modules-right = pulseaudio filesystem memory cpu netstat battery date
 wm-restack = i3
 override-redirect = false
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+; scroll-up = i3wm-wsnext
+; scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
-
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.underline}
-
-label-layout = %layout%
-label-layout-underline = ${colors.underline}
-
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.underline}
-
-[module/filesystem]
-type = internal/fs
-interval = 25
-
-mount-0 = /
-
-format-mounted-prefix = " "
-format-mounted-prefix-foreground = ${colors.foreground-alt}
-format-mounted-underline = ${colors.underline}
-
-label-mounted = %free%
+; Define fallback values used by all module formats
+format-foreground = ${colors.foreground} 
+format-background = ${colors.background}
+format-underline  = ${colors.underline}
+format-overline   = ${colors.underline}
+format-spacing    = 0
+format-padding    = 0
+format-margin     = 0
+format-offset     = 0
 
 [module/i3]
 type = internal/i3
@@ -110,7 +88,8 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = false
 
-label-mode-padding = 0
+label-mode = %mode%
+label-mode-padding = 2
 label-mode-foreground = {colors.foreground-alt}
 label-mode-background = ${colors.primary}
 
@@ -141,27 +120,17 @@ label-urgent-padding = 2
 ; Separator in between workspaces
 label-separator = |
 
-[module/xbacklight]
-type = internal/xbacklight
+[module/filesystem]
+type = internal/fs
+interval = 25
 
-format = <label> <bar>
-label = BL
+mount-0 = /
 
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #fff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = ${colors.foreground}
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
+format-mounted-prefix = " "
+format-mounted-prefix-foreground = ${colors.foreground-alt}
+format-mounted-underline = ${colors.underline}
 
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
+label-mounted = %free%
 
 [module/netstat]
 type = internal/network
@@ -286,54 +255,6 @@ animation-charging-3 =  
 animation-charging-4 =  
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-underline = ${colors.underline}
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 [module/spotify]
 type = custom/script

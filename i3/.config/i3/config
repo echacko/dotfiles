@@ -100,10 +100,10 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness 
 
 # For music player control
 mode "music" {
-        bindsym space exec cmus-remote --pause
-        bindsym h     exec cmus-remote --prev
-        bindsym l     exec cmus-remote --next
-        bindsym s     exec cmus-remote --stop
+        bindsym space exec playerctl play-pause
+        bindsym h     exec playerctl previous
+        bindsym l     exec playerctl next
+        bindsym s     exec playerctl stop
 
 # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -115,10 +115,10 @@ bindsym $mod+Shift+m mode "music"
 # bindsym $mod+space exec cmus-remote --pause
 # bindsym $mod+Shift+Right exec cmus-remote --next
 # bindsym $mod+Shift+Left exec cmus-remote --prev
-# bindsym XF86AudioPlay exec /.local/bin/mpc_toggle.sh
-# bindsym XF86AudioStop exec mpc stop
-# bindsym XF86AudioNext exec mpc next
-# bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioStop exec playerctl stop
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # Lockscreen
 bindsym Mod1+$mod1+l exec ~/.config/i3/dpms-i3lock.sh
