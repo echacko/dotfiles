@@ -31,6 +31,9 @@ bottom = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
+; Enables pseudo-transparency for the bar
+; If set to true the bar can be transparent without a compositor.
+pseudo-transparency = false
 
 line-size = 3
 line-color = #f00
@@ -39,7 +42,11 @@ border-size = 2
 border-color = #00000000
 
 padding-left = 0
-padding-right = 3
+padding-right = 5
+
+tray-position = right
+tray-padding = 0
+;tray-background = #0063ff
 
 module-margin-left = 1
 module-margin-right = 1
@@ -52,9 +59,6 @@ modules-left = i3
 modules-center =
 modules-right = pulseaudio filesystem memory cpu netstat battery date
 
-tray-position = right
-tray-padding = 0
-;tray-background = #0063ff
 
 wm-restack = i3
 override-redirect = false
