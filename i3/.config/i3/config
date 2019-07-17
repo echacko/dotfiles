@@ -300,7 +300,7 @@ assign [class="Thunderbird"]  $ws10
 
 # Autostarts
 #
-# exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 
 #Wallpaper Config
 exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
@@ -368,22 +368,22 @@ client.background       $base07
 # Add below to line to disable workspace switching while scrolling in i3bar 
 #    wheel_down_cmd nop
 #    status_command i3blocks
-bar {
-    wheel_up_cmd nop
-    wheel_down_cmd nop
-    status_command i3blocks
-
-    colors {
-        background $base00
-        separator  $base01
-        statusline $base04
-
-        # State             Border  BG      Text
-        focused_workspace   $base05 $base0D $base00
-        active_workspace    $base05 $base03 $base00
-        inactive_workspace  $base03 $base01 $base05
-        urgent_workspace    $base08 $base08 $base00
-        binding_mode        $base00 $base0A $base00
-    }
-}
+# bar {
+#     wheel_up_cmd nop
+#     wheel_down_cmd nop
+#     status_command i3blocks
+# 
+#     colors {
+#         background $base00
+#         separator  $base01
+#         statusline $base04
+# 
+#         # State             Border  BG      Text
+#         focused_workspace   $base05 $base0D $base00
+#         active_workspace    $base05 $base03 $base00
+#         inactive_workspace  $base03 $base01 $base05
+#         urgent_workspace    $base08 $base08 $base00
+#         binding_mode        $base00 $base0A $base00
+#     }
+# }
 
