@@ -53,6 +53,7 @@ Plug 'honza/vim-snippets'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
+Plug 'skywind3000/vim-preview'
 Plug 'luochen1990/rainbow'
 " All of your Plugins must be added before the following line
 call plug#end()
