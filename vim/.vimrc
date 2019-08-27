@@ -91,7 +91,8 @@ let g:tex_flavor='latex'        " For laetx filetype
 " }}}
 
 " UI {{{
-set number         " show line numbers
+set nonumber       " do not show line numbers
+set relativenumber " show number relative to the cursor position
 set showcmd        " show command in bottom bar
 set cursorline     " highlight current line
 set noshowmode     " do not show mode as airline does that
@@ -207,6 +208,10 @@ cnoremap ww w
 
 " Run make
 map <f9> :make<CR>
+
+" set linenumer
+nnoremap <leader>snu :set invnumber<CR>
+
 " }}}
 
 " {{{ Autocmds
