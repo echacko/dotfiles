@@ -71,6 +71,7 @@ colorscheme base16-pop " Enable the base16 color scheme
 hi Normal ctermfg=250 ctermbg=none
 hi NonText ctermfg=250 ctermbg=none
 hi LineNr ctermfg=250 ctermbg=none
+hi SignColumn ctermfg=250 ctermbg=none
 hi vertsplit ctermfg=250 ctermbg=none
 
 "}}}
@@ -270,6 +271,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'cpp' : ['clang-format'],
+\   'python' : ['yapf'],
 \}
 
 " Use deoplete.
