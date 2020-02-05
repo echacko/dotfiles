@@ -33,3 +33,6 @@
 *.sta
 *.snm
 *.o
+compile_commands.json
+.ccl-cache//
+__pycache__/
