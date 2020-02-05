@@ -10,5 +10,5 @@ revert() {
 trap revert SIGHUP SIGINT SIGTERM
 xset +dpms dpms 10 20 30
 # i3lock -n -i $HOME/.i3/images/lock.png -c '#000000' -o '#191d0f' -w '#572020' -l '#ffffff' -e
-i3lock -n -i ~/.config/i3/lock.png
+betterlockscreen -t "GGMU" -l dim
 revert
