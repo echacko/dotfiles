@@ -97,11 +97,10 @@ shopt -s histappend
 ## Aliases
 #
 
-alias vi="vim --servername=VIM"
+alias vi="nvim"
 alias v="vim --servername=VIM"
 alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
 alias ssh="ssh -Y"
-alias vi="vim"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
@@ -111,7 +110,7 @@ alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
 alias xo='~/Scripts/xo.sh '
-alias aa="source ~/anaconda3/bin/activate"
+alias activate_conda="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/Scripts/extract.sh'
