@@ -15,7 +15,7 @@ then
 fi
 
 # Get the status of the device
-status=$(xinput list-props 11 | grep  'Device Enabled' | cut -d: -f2)
+status=$(xinput list-props $tid | grep  'Device Enabled' | cut -d: -f2)
 
 # Enable or disable based on status
 if [ $status -eq 1 ]    # Currently enabled
