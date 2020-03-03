@@ -299,6 +299,12 @@ assign [class="(?i)Firefox"] $ws2
 # Assign Thunderbird to workspace 10
 assign [class="Thunderbird"]  $ws10
 
+# Assign libreoffice to ws6
+assign [class="(?i)libreoffice-writer$"]$ ws6
+assign [class="(?i)soffice"] $ws6
+assign [class="(?i)libreoffice-calc"] $ws6
+assign [class="(?i)libreoffice.*"] $ws6
+
 # Autostarts
 #
 exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
@@ -316,7 +322,7 @@ exec --no-startup-id /usr/bin/wicd-client --tray
 exec --no-startup-id /usr/bin/i3-battery-popup-git -L 20 -n
 
 # Start compton
-exec_always compton -f
+exec_always picom --config $HOME/.config/picom/picom.conf
 
 # Start unclutter
 exec_always unclutter
