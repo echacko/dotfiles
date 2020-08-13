@@ -19,7 +19,7 @@ use utf8;
 my %layouts = (
     "3" => 'tabbed',
     "4" => 'tabbed',
-    "6" => 'tabbed'
+    "6" => 'tabbed',
 );
 
 my $i3 = i3();

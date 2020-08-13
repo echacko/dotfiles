@@ -95,8 +95,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec   "brightnessctl s 10%+; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "brightnessctl s 10%-; notify-send 'brightness down'"
 
 # For music player control
 mode "music" {
@@ -289,7 +289,7 @@ new_float pixel 2
 #
 for_window [window_role="pop-up"] floating enable,move absolute center
 for_window [class="(?i)feh"] floating enable, move absolute center
-for_window [class="(?i)Nm-connection-editor"] floating enable, move absolute center
+ #for_window [class="(?i)Nm-connection-editor"] floating enable, move absolute center
 for_window [class="(?i)File-roller"] floating enable, resize set 480 480
 for_window [class="(?i)Spotify"] floating enable, move absolute center
 
@@ -319,7 +319,7 @@ exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i
 exec --no-startup-id nm-applet
 
 # Low battery popup
-exec --no-startup-id /usr/bin/i3-battery-popup-git -L 20 -n
+exec --no-startup-id /usr/bin/i3-battery-popup -L 20 -n
 
 # Start compton
 exec_always picom --config $HOME/.config/picom/picom.conf
