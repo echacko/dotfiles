@@ -93,11 +93,18 @@ fi
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
-export LS_OPTIONS='--color=auto'
-alias l='ls $LS_OPTIONS'
-alias ll='ls $LS_OPTIONS -l -N -hF'
-alias ls='ls $LS_OPTIONS -N -hF'
 
+# Use lsd if installed insted of lsd
+export LS_OPTIONS='--color=auto'
+if [ -x /usr/bin/lsd ]; then
+  alias l='lsd $LS_OPTIONS'
+  alias ll='lsd $LS_OPTIONS -l -hF'
+  alias ls='lsd $LS_OPTIONS -hF'
+else
+  alias l='ls $LS_OPTIONS'
+  alias ll='ls $LS_OPTIONS -l -N -hF'
+  alias ls='ls $LS_OPTIONS -N -hF'
+fi
 alias grep='grep --color=auto'
 export LESS="-R"
 
@@ -135,5 +142,5 @@ alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/Scripts/extract.sh'
 alias convert-to-pdf="libreoffice --headless --convert-to pdf "
-alias make='bear make -j6'
 alias calc="="
+alias cat=bat
