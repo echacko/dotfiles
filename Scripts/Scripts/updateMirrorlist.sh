@@ -8,7 +8,7 @@
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.pacnew
 
 # Now rank all the mirrors.
-rankmirrors /etc/pacman.d/mirrorlist.pacnew > /etc/pacman.d/mirrorlist.tmp
+rankmirrors -n 10 /etc/pacman.d/mirrorlist.pacnew > /etc/pacman.d/mirrorlist.tmp
 
 # Check if there are any changes in the updated mirrorlist.
 diff /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp > /dev/null && { 
