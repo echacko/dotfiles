@@ -56,8 +56,8 @@ font-1 = RobotoMono Nerd Font:antialias=true :size=6;0
 font-2 = RobotoMono Nerd Font:antialias=false:size=9;0
 
 modules-left = i3
-modules-center =
-modules-right = pulseaudio filesystem memory cpu netstat battery date
+modules-center = 
+modules-right = spotify pulseaudio filesystem memory cpu netstat battery date
 
 
 wm-restack = i3
@@ -229,6 +229,7 @@ ramp-volume-foreground = ${colors.foreground-alt}
 
 [module/battery]
 type = internal/battery
+interval = 5
 battery = BAT0
 adapter = AC0
 full-at = 98
@@ -264,7 +265,7 @@ interval = 1
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format = <label>
-exec = python ~/.config/polybar/scripts/spotify_status.py -f '{artist}: {song}'
+exec = python ~/.config/polybar/scripts/spotify_status.py -q -f '{artist}: {song}'
 format-underline = ${colors.underline}
 
 [settings]
