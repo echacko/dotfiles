@@ -98,7 +98,7 @@ fi
 export LS_OPTIONS='--color=auto'
 if [ -x /usr/bin/lsd ]; then
   alias l='lsd $LS_OPTIONS'
-  alias ll='lsd $LS_OPTIONS -l -hF'
+  alias ll='lsd $LS_OPTIONS -lrt -hF'
   alias ls='lsd $LS_OPTIONS -hF'
 else
   alias l='ls $LS_OPTIONS'
