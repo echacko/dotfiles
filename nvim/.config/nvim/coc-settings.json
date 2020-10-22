@@ -1,0 +1,26 @@
+{
+  "suggest.maxCompleteItemCount": 20,
+
+  "python.pythonPath" : "/home/echacko/Scripts/python",
+  "python.condaPath"  : "/home/echacko/anaconda3/bin/activate",
+  "python.autoComplete.addBrackets" : true,
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled" : true,
+  "python.formatting.provider": "black",
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": [],
+
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        },
+        "highlight": { "lsRanges" : true }
+      }
+    }
+  }
+}

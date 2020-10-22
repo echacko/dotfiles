@@ -28,25 +28,26 @@ Plug 'jlanzarotta/bufexplorer'                          " Easily switch buffers
 Plug 'luochen1990/rainbow'                              " Make braces colourfull
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'easymotion/vim-easymotion'                        " Easy vim motions
-
-Plug 'majutsushi/tagbar'                                " Display tags in sidebar
-
+Plug 'liuchengxu/vista.vim'                             " Tag bar
 
 Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
 Plug 'Shougo/neosnippet-snippets'                       " Default snippets def
 Plug 'honza/vim-snippets'                               " More snippets def
 
+" Plugins for file explorer, linter and latex compiler.
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'lambdalisue/suda.vim'
 Plug 'vimwiki/vimwiki'
 
 " Plugins for file explorer, linter and latex compiler.
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
-" Intellisense Engine
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'jackguo380/vim-lsp-cxx-highlight'                   " Semanitc highlight
+" Language server plugins
+Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
+Plug 'nvim-lua/completion-nvim'                           " Auto-completion
+Plug 'nvim-lua/diagnostic-nvim'                           " diagnostics msgs
+Plug 'lervag/vimtex'                                      " Latex
+Plug 'plasticboy/vim-markdown'                            " Markdown
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
@@ -122,31 +123,37 @@ hi vertsplit ctermfg=250 ctermbg=none
 " }}}
 
 " UI {{{
-set nonumber        " do not show line numbers
-set relativenumber  " show number relative to the cursor position
-set showcmd         " show command in bottom bar
-set cursorline      " highlight current line
-set noshowmode      " do not show mode as airline does that
-set wrap            " enable word wrap
-set wildmenu        " visual autocomplete for command menu
-set lazyredraw      " redraw only when we need to.
-set showmatch       " highlight matching [{()}]
-set spelllang=en    " spell
-set wildchar=<TAB>  " key for line completion
-set cc=80           " Right margin
-set scrolloff=1     " Show atleast one line above/below the cursor
-set sidescrolloff=5 " Show at least one line left/right of the cursor.
-set matchpairs+=<:> " Highlight matching pairs of brackets
-set list            " Show whitespaces
-set showtabline=2   " always show tabline
-set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
-autocmd FileType tex,python,sh,c set tw=75 " Line width
-" Substitute live preview
-set inccommand=nosplit
-set shell=/bin/bash
-set fillchars=vert::
-set signcolumn=yes  " always show sign column
+set nonumber           " do not show line numbers
+set relativenumber     " show number relative to the cursor position
+set showcmd            " show command in bottom bar
+set cursorline         " highlight current line
+set noshowmode         " do not show mode as airline does that
+set wrap               " enable word wrap
+set wildmenu           " visual autocomplete for command menu
+set lazyredraw         " redraw only when we need to.
+set showmatch          " highlight matching [{()}]
+set spelllang=en       " spell
+set wildchar=<TAB>     " key for line completion
+set cc=80              " Right margin
+set scrolloff=1        " Show atleast one line above/below the cursor
+set sidescrolloff=5    " Show at least one line left/right of the cursor.
+set matchpairs+=<:>    " Highlight matching pairs of brackets
+set list               " Show whitespaces
+set showtabline=2      " always show tabline
+set signcolumn=number  " always show sign column
+set inccommand=nosplit " Substitute live preview
+set shell=/bin/bash    " Default shell
 
+" Display chars for space, tabs and splits
+set fillchars=vert::
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+autocmd FileType tex,python,sh,c set tw=75 " Line width
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " }}}
@@ -181,95 +188,7 @@ endif
 
 " Custom Keymappings {{{
 "
-" Map leader
-" let mapleader = ','
-
-" Turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
-
-" Remap the split buffer moves
-nnoremap <M-h> <C-w>h
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-l> <C-w>l
-
-" Insert mode movement
-imap <M-h> <left>
-imap <M-j> <down>
-imap <M-k> <up>
-imap <M-l> <right>
-imap <M-f> <C-right>
-imap <M-b> <C-left>
-
-
-" Resizing
-nnoremap <C-M-H> 2<C-w><
-nnoremap <C-M-L> 2<C-w>>
-nnoremap <C-M-K> <C-w>-
-nnoremap <C-M-J> <C-w>+
-nnoremap <tab> <C-W>w
-
-" Open file browser
-nnoremap <leader>e :NERDTreeToggle<CR>
-
-" Forgot sudo??
-" cmap w!! %!sudo tee  %
-cnoreabbrev w!! w suda://%
-
-" Buffer selection
-nnoremap <leader>n :bn<CR>
-nnoremap <leader>p :bp<CR>
-nnoremap <leader><Tab> :b#<CR>
-
-" Spell checking
-nnoremap <leader>s :set spell!<CR>
-
-" Prepare tabularize
-nmap <leader>ta :'<,'> Tabularize /
-vmap <leader>ta :Tabularize /
-
-" vsplit
-nnoremap <leader>vs :vsplit<CR>
-
-" Edit .vimrc
-nnoremap <leader>vi :e $HOME/.config/nvim/init.vim <CR>
-nnoremap <leader>vr :source $HOME/.config/nvim/init.vim <CR>
-
-" Search and delete for trailing spaces and spaces before a tab
-nnoremap <leader>dw :%s/\s\+$\\| \+\ze\t//gc<CR>
-
-" Togle fold
-nnoremap <space> za
-
-" Toggle Tagbar
-nnoremap <leader>tt :TagbarToggle<CR>
-
-" Search command history
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-" Annoying Q, qq, W, ww
-cnoremap Q q
-cnoremap qq q
-cnoremap W w
-cnoremap ww w
-
-" Run make
-map <f9> :make<CR>
-
-" Quick write session with F2
-map <F2> :mksession! ~/.vim_session<cr>
-" And load session with F3
-map <F3> :source ~/.vim_session<cr>
-
-" Command mode history
-cmap <M-p> <up>
-cmap <M-n> <down>
-cmap <M-k> <up>
-cmap <M-j> <down>
-
-" Manually refresh file
-nmap <F5> :e!<cr>
-
+source ~/.config/nvim/key-mapping.vim
 "}}}
 
 " Pluging Configs {{{
