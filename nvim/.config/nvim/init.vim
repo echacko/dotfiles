@@ -24,7 +24,6 @@ Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'jlanzarotta/bufexplorer'                          " Easily switch buffers
 Plug 'luochen1990/rainbow'                              " Make braces colourfull
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'easymotion/vim-easymotion'                        " Easy vim motions
@@ -43,9 +42,8 @@ Plug 'vimwiki/vimwiki'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " Language server plugins
-Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
-Plug 'nvim-lua/completion-nvim'                           " Auto-completion
-Plug 'nvim-lua/diagnostic-nvim'                           " diagnostics msgs
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'jackguo380/vim-lsp-cxx-highlight'                   " Semanitc highlight
 Plug 'lervag/vimtex'                                      " Latex
 Plug 'plasticboy/vim-markdown'                            " Markdown
 
