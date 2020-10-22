@@ -42,9 +42,10 @@ Plug 'vimwiki/vimwiki'
 " Plugins for file explorer, linter and latex compiler.
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
-" Intellisense Engine
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'jackguo380/vim-lsp-cxx-highlight'                   " Semanitc highlight
+" Language server plugins
+Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
+Plug 'nvim-lua/completion-nvim'                           " Auto-completion
+Plug 'nvim-lua/diagnostic-nvim'                           " diagnostics msgs
 Plug 'lervag/vimtex'                                      " Latex
 Plug 'plasticboy/vim-markdown'                            " Markdown
 
