@@ -305,12 +305,18 @@ assign [class="(?i)soffice"] $ws6
 assign [class="(?i)libreoffice-calc"] $ws6
 assign [class="(?i)libreoffice.*"] $ws6
 
+
+# For MS-Teams
+assign [class="microsoft teams - insiders"] $ws4
+for_window [class="microsoft teams - insiders"] move to $ws4
+for_window [title="Microsoft Teams Notification"] floating enable
+
 # Autostarts
 #
 exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 
 #Wallpaper Config
-exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
+exec_always --no-startup-id feh --randomize --bg-fill --no-fehbg ~/Pictures/Wallpapers/
 
 # Start autolock
 exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "~/.config/i3/dpms-i3lock.sh" -detectsleep

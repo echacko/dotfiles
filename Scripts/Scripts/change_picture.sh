@@ -20,7 +20,7 @@ cp -f $PIC_DIR/lockNlogin.png /usr/share/backgrounds/.
 betterlockscreen -u $PIC_DIR
 
 # Now set the wallpaper
-feh --randomize --bg-fill $PIC_DIR/*
+feh --randomize --bg-fill --no-fehbg $PIC_DIR/*
 
 exit 0
 
