@@ -81,7 +81,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+  export EDITOR='vim'
 else
   export EDITOR='nvim'
 fi
@@ -137,6 +137,7 @@ alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
 alias xo='~/Scripts/xo.sh '
+alias a="source ~/anaconda3/bin/activate"
 alias activate_conda="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
