@@ -25,11 +25,12 @@ let g:lightline.tabline = {
 \ 'right': [ [ ] ]
 \}
 
-let g:lightline.component = {
-\ 'lineinfo': '%3p%% ☰   %3l:%-2c'
-\}
+" let g:lightline.component = {
+" \ 'lineinfo': '%3p%% ☰   %3l/%L:%-2c'
+" \}
 
 let g:lightline.component_function = {
+\ 'lineinfo' : 'LightlineLineNumber',
 \ 'filename' : 'LightlineFilename',
 \ 'filetype' : 'LightlineFiletype',
 \ 'mode'     : 'LightlineMode',
@@ -77,7 +78,13 @@ let g:lightline.tabline_subseparator = g:lightline.subseparator
 
 
 function! LightlineLineNumber()
-  return winwidth(0) > 70 ? '%3p%% ☰   %3l:%-2c' : '%2p%% : %2l'
+  let cur = line('.')
+  let end = line('$')
+  let col = col('.')
+  let per = cur * 100 / end
+  return winwidth(0) > 70 ?
+    \ printf("%2d%% ☰  %3d/%-3d:%-2d", per, cur, end, col ) :
+    \ printf("%2d%%", per)
 endfunction
 
 function! LightlineModified()
@@ -90,11 +97,9 @@ endfunction
 
 function! LightlineFilename()
   let fname = expand('%:t')
-  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+  return  &ft == 'vista' ? 'Vista' :
+        \ &ft == 'nerdtree' ? 'NERDTree' :
+        \ &ft == 'qf' ? 'QuickFix' :
         \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
@@ -105,15 +110,7 @@ function! LightlineFiletype()
 endfunction
 
 function! LightlineMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ &ft == 'qf' ? 'QuickFix' :
-        \ winwidth(0) > 70 ? lightline#mode() : ''
+  return winwidth(0) > 70 ? lightline#mode() : ''
 endfunction
 
 function! LightlineGitBlame() abort
@@ -123,7 +120,7 @@ function! LightlineGitBlame() abort
 endfunction
 
 function! LightlineGitStatus()
-  if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler'
+  if expand('%:t') !~? 'vista\|Gundo\|NERD'
     try
       let status = get(g:, 'coc_git_status')
     catch
