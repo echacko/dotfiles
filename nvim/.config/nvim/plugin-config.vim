@@ -28,6 +28,10 @@ let g:rainbow_active = 1
 "   <leader>w - Easy-motion highlights first word letters bi-directionally
 map <leader>f <Plug>(easymotion-bd-w)
 
+" vim-tex
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_view_method = 'zathura'
+
 "VimWiki
 let g:vimwiki_list = [{'path': '~/work/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
