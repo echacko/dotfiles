@@ -23,7 +23,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
-Plug 'Townk/vim-autoclose'                              " For auto-close feature
+Plug 'jiangmiao/auto-pairs'                             " For auto-close feature
 Plug 'luochen1990/rainbow'                              " Make braces colourfull
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'easymotion/vim-easymotion'                        " Easy vim motions
