@@ -9,7 +9,7 @@
 font pango:monospace 8
 
 # Set default terminal
-set $terminal termite
+set $terminal alacritty
 
 # Set Ctrl as $mod1
 set $mod1 Control
