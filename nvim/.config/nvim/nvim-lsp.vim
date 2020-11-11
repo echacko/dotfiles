@@ -25,10 +25,16 @@ nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap ]d <cmd>NextDiagnostic<CR>
 nnoremap [d <cmd>PrevDiagnostic<CR>
 
+" Settings from vim-lsp
+" let g:lsp_signs_enabled = 1
+" let g:lsp_signs_error = {'text': '✗'}
+" let g:lsp_signs_warning = {'text': '!'}
+
 lua <<EOF
 local nvim_lsp = require("nvim_lsp")
 local nvim_completion = require("completion")
 local nvim_diagnostic = require("diagnostic")
+local nvim_treesitter = require("nvim-treesitter.configs")
 
 local custom_attach = function()
   nvim_completion.on_attach()
@@ -41,6 +47,13 @@ nvim_lsp.pyls.setup{ on_attach = custom_attach }
 nvim_lsp.texlab.setup{ on_attach = custom_attach }
 
 nvim_lsp.clangd.setup{ on_attach = custom_attach }
-EOF
 
+nvim_treesitter.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true,
+  }
+}
+
+EOF
 " }}}

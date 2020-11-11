@@ -1,6 +1,6 @@
 " Lightline settings
 let g:lightline = {
-\ 'colorscheme': 'jellybeans',
+\ 'colorscheme': 'sonokai',
 \ }
 
 let g:lightline.active = {

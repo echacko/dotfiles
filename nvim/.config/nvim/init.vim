@@ -24,11 +24,10 @@ Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'jlanzarotta/bufexplorer'                          " Easily switch buffers
 Plug 'luochen1990/rainbow'                              " Make braces colourfull
 Plug 'godlygeek/tabular'                                " Text alignment
-Plug 'easymotion/vim-easymotion'                        " Easy vim motions
 Plug 'liuchengxu/vista.vim'                             " Tag bar
+Plug 'unblevable/quick-scope'                           " hihglights for f,F
 
 Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
 Plug 'Shougo/neosnippet-snippets'                       " Default snippets def
@@ -46,6 +45,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
 Plug 'nvim-lua/completion-nvim'                           " Auto-completion
 Plug 'nvim-lua/diagnostic-nvim'                           " diagnostics msgs
+Plug 'nvim-treesitter/nvim-treesitter'                    " nvim treesiter
 Plug 'lervag/vimtex'                                      " Latex
 Plug 'plasticboy/vim-markdown'                            " Markdown
 
@@ -54,8 +54,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Color
-Plug 'chriskempson/base16-vim'                          " Base-16 theme
-
+Plug 'sainnhe/sonokai'
 call plug#end()
 
 "}}}
@@ -106,13 +105,20 @@ syntax enable                   " enable syntax processing
 
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
+  set t_Co=256
 endif
+
+" Or if you have Neovim >= 0.1.5
+if (has("termguicolors"))
+ set termguicolors            " Enables 24-bit RGB color in the terminal
+endif
+
 "
 " Theme
-let base16colorspace=256        " Access colors present in 256 colorspace
+let base16colorspace=256        " enable if using base16-shell
 let g:hybrid_use_Xresources = 1
-colorscheme base16-gruvbox-dark-soft
+colorscheme sonokai
+let g:sonokai_style = 'andromeda'
 
 " Transpancey for text and buffer
 hi Normal ctermfg=250 ctermbg=none

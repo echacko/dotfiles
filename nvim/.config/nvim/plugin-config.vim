@@ -8,7 +8,7 @@ source ~/.config/nvim/lightline.vim
 source ~/.config/nvim/denite.vim
 
 " CoC-Nvim
-source ~/.config/nvim/coc.vim
+source ~/.config/nvim/nvim-lsp.vim
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
@@ -24,9 +24,9 @@ let g:NERDTreeDirArrowCollapsible = '⬎'
 " Rainbow Braces
 let g:rainbow_active = 1
 
-" Easymotion
-"   <leader>w - Easy-motion highlights first word letters bi-directionally
-map <leader>f <Plug>(easymotion-bd-w)
+" Quick-scope
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 "VimWiki
 let g:vimwiki_list = [{'path': '~/work/vimwiki/',
