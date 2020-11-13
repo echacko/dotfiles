@@ -11,6 +11,9 @@ source ~/.config/nvim/denite.vim
 source ~/.config/nvim/nvim-lsp.vim
 
 " NERDTree
+" Open NerdTree file browser
+nnoremap <leader>e :NERDTreeToggle<CR>
+
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeQuitOnOpen = 1
 " Hide the Nerdtree status line to avoid clutter
@@ -31,3 +34,19 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 "VimWiki
 let g:vimwiki_list = [{'path': '~/work/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+
+" Vista
+" Toggle tagbar
+nnoremap <leader>tt :Vista!!<CR>
+
+let g:vista_default_executive = 'nvim_lsp'      " Specify the LSP
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]      " Nice fonts
+let g:vista#renderer#enable_icon = 1            " Show icons
+let g:vista_disable_statusline = 1              " disable statusline
+
+
+" Tabular
+" Prepare tabularize
+nmap <leader>ta :'<,'> Tabularize /
+vmap <leader>ta :Tabularize /
+

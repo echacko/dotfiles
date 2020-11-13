@@ -3,6 +3,8 @@
 "
 " LSP {{{
 "
+" TODO: Add snippets completion and telescope
+" TODO: Split to lua files and seperate files for each plugins
 " Which python to use for LSP
 let g:python3_host_prog='/usr/bin/python'
 
@@ -22,13 +24,54 @@ nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <leader>r <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 
-nnoremap ]d <cmd>NextDiagnostic<CR>
-nnoremap [d <cmd>PrevDiagnostic<CR>
+let g:diagnostic_enable_virtual_text = 1      " Show msg at eol
+let g:diagnostic_trimmed_virtual_text = '20'  " Lenght of msg
+let g:diagnostic_insert_delay = 1             " Do not show msg while in INS
+let g:diagnostic_virtual_text_prefix = ' '
+call sign_define("LspDiagnosticsErrorSign", {"text" : "✗", "texthl" : "LspDiagnosticsError"})
+call sign_define("LspDiagnosticsWarningSign", {"text" : "!!", "texthl" : "LspDiagnosticsWarning"})
+call sign_define("LspDiagnosticsInformationSign", {"text" : "--", "texthl" : "LspDiagnosticsInformation"})
+call sign_define("LspDiagnosticsHintSign", {"text" : "~~", "texthl" : "LspDiagnosticsHint"})
+nnoremap ]d <cmd>NextDiagnosticCycle<CR>
+nnoremap [d <cmd>PrevDiagnosticCycle<CR>
 
-" Settings from vim-lsp
-" let g:lsp_signs_enabled = 1
-" let g:lsp_signs_error = {'text': '✗'}
-" let g:lsp_signs_warning = {'text': '!'}
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+let g:completion_enable_auto_signature = 0      " Disable signature preview
+let g:completion_enable_snippet = "Neosnippet"  " For snippet support. TODO
+
+" Configure the completion chains
+let g:completion_chain_complete_list = {
+      \'default' : {
+      \ 'default' : [
+      \   {'complete_items' : ['lsp', 'snippet']},
+      \   {'mode' : 'file'}
+      \ ],
+      \ 'comment' : [],
+      \ 'string' : []
+      \ },
+      \'vim' : [
+      \ {'complete_items': ['snippet']},
+      \ {'mode' : 'cmd'}
+      \ ],
+      \'c' : [
+      \ {'complete_items': ['ts']}
+      \ ],
+      \'python' : [
+      \ {'complete_items': ['snippet', 'ts']}
+      \ ],
+      \'lua' : [
+      \ {'complete_items': ['ts']}
+      \ ],
+      \}
 
 lua <<EOF
 local nvim_lsp = require("nvim_lsp")
@@ -52,7 +95,20 @@ nvim_treesitter.setup {
   ensure_installed = "maintained",
   highlight = {
     enable = true,
-  }
+    use_languagetree = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+  indent = {
+    enable = true,
+  },
 }
 
 EOF

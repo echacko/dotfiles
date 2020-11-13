@@ -73,14 +73,3 @@ cmap <M-j> <down>
 " Manually refresh file
 nmap <F5> :e!<cr>
 
-" Open NerdTree file browser
-nnoremap <leader>e :NERDTreeToggle<CR>
-
-" Toggle Tagbar
-nnoremap <leader>tt :Vista!!<CR>
-
-" Tabular
-" Prepare tabularize
-nmap <leader>ta :'<,'> Tabularize /
-vmap <leader>ta :Tabularize /
-

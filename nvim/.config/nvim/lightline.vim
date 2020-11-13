@@ -1,15 +1,14 @@
 " Lightline settings
 let g:lightline = {
-\ 'colorscheme': 'sonokai',
+\ 'colorscheme': 'onedark',
 \ }
 
 let g:lightline.active = {
 \ 'left' : [ [ 'mode', 'paste' ],
-\            [ 'filename', 'git', 'diagnostic', 'blame' ],
+\            [ 'filename', 'git', 'method' ],
 \          ],
 \ 'right': [ [ 'lineinfo' ],
-\            [ 'filetype' ],
-\            [ 'cocstatus'] ]
+\            [ 'filetype' ] ]
 \ }
 
 let g:lightline.inactive = {
@@ -25,17 +24,17 @@ let g:lightline.tabline = {
 \ 'right': [ [ ] ]
 \}
 
-let g:lightline.component = {
-\ 'lineinfo': '%3p%% ☰   %3l:%-2c'
-\}
+" let g:lightline.component = {
+" \ 'lineinfo': '%3p%% ☰   %3l/%L:%-2c'
+" \}
 
 let g:lightline.component_function = {
+\ 'lineinfo' : 'LightlineLineNumber',
 \ 'filename' : 'LightlineFilename',
 \ 'filetype' : 'LightlineFiletype',
 \ 'mode'     : 'LightlineMode',
-\ 'cocstatus': 'coc#status',
 \ 'git'      : 'LightlineGitStatus',
-\ 'blame'    : 'LightlineGitBlame',
+\ 'method'   : 'NearestMethodOrFunction',
 \}
 
 let g:lightline.separator = {
@@ -77,7 +76,14 @@ let g:lightline.tabline_subseparator = g:lightline.subseparator
 
 
 function! LightlineLineNumber()
-  return winwidth(0) > 70 ? '%3p%% ☰   %3l:%-2c' : '%2p%% : %2l'
+  let cur = line('.')
+  let end = line('$')
+  let col = col('.')
+  let per = cur * 100 / end
+  " printf("%2d%% ☰  %3d/%-3d:%-2d", per, cur, end, col ) :
+  return winwidth(0) > 70 ?
+    \ printf("%2d%% ☰  %3d:%-2d", per, cur, col ) :
+    \ printf("%2d%%", per)
 endfunction
 
 function! LightlineModified()
@@ -90,11 +96,9 @@ endfunction
 
 function! LightlineFilename()
   let fname = expand('%:t')
-  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+  return  &ft == 'vista_kind' ? 'Vista' :
+        \ &ft == 'nerdtree' ? 'NERDTree' :
+        \ &ft == 'qf' ? 'QuickFix' :
         \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
@@ -105,30 +109,38 @@ function! LightlineFiletype()
 endfunction
 
 function! LightlineMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ &ft == 'qf' ? 'QuickFix' :
-        \ winwidth(0) > 70 ? lightline#mode() : ''
+  return winwidth(0) > 70 ? lightline#mode() : ''
 endfunction
 
-function! LightlineGitBlame() abort
-  let blame = get(b:, 'coc_git_blame', '')
-  " return blame
-  return winwidth(0) > 120 ? blame : ''
-endfunction
+let g:lightline.mode_map = {
+    \ 'n' : 'N',
+    \ 'i' : 'I',
+    \ 'R' : 'R',
+    \ 'v' : 'VI',
+    \ 'V' : 'VL',
+    \ "\<C-v>": 'VB',
+    \ 'c' : 'C',
+    \ 's' : 'S',
+    \ 'S' : 'SL',
+    \ "\<C-s>": 'SB',
+    \ 't': 'T',
+    \ }
 
 function! LightlineGitStatus()
-  if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler'
-    try
-      let status = get(g:, 'coc_git_status')
-    catch
-    endtry
-    return status == '0' ? '' : status
+  if expand('%:t') !~? 'vista\|Gundo\|NERD'
+    let branch = FugitiveHead()
+    let mark = ' '
+
+    return branch !=# '' ? mark.branch : ''
   endif
+  return ''
+endfunction
+
+" TODO: Maybe use tree-sitter for this?
+function! NearestMethodOrFunction() abort
+  try
+    return get(b:, 'vista_nearest_method_or_function', '')
+  catch
+  endtry
   return ''
 endfunction

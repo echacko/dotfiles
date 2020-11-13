@@ -24,10 +24,10 @@ Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'luochen1990/rainbow'                              " Make braces colourfull
+Plug 'luochen1990/rainbow'                              " Make braces colourful
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'liuchengxu/vista.vim'                             " Tag bar
-Plug 'unblevable/quick-scope'                           " hihglights for f,F
+Plug 'unblevable/quick-scope'                           " highlights for f,F
 
 Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
 Plug 'Shougo/neosnippet-snippets'                       " Default snippets def
@@ -46,7 +46,7 @@ Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
 Plug 'nvim-lua/completion-nvim'                           " Auto-completion
 Plug 'nvim-lua/diagnostic-nvim'                           " diagnostics msgs
 Plug 'nvim-treesitter/nvim-treesitter'                    " nvim treesiter
-Plug 'lervag/vimtex'                                      " Latex
+Plug 'nvim-treesitter/completion-treesitter'              " completion srcs
 Plug 'plasticboy/vim-markdown'                            " Markdown
 
 " Icons
@@ -54,7 +54,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Color
-Plug 'sainnhe/sonokai'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 "}}}
@@ -117,7 +117,7 @@ endif
 " Theme
 let base16colorspace=256        " enable if using base16-shell
 let g:hybrid_use_Xresources = 1
-colorscheme sonokai
+colorscheme onedark
 let g:sonokai_style = 'andromeda'
 
 " Transpancey for text and buffer
