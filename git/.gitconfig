@@ -43,10 +43,12 @@
 
 [push]
 	default = matching
+[pull]
+  ff = only
 
 [alias]
 	st = status -sb
 	ci = commit -v
 	last = log -1 HEAD
-	l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr%Creset' --graph
+	l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph
 	d = difftool
