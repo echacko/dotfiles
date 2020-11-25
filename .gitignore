@@ -1,5 +1,6 @@
 vim/.vim/*
 nvim/.config/nvim/autoload
 nvim/.config/nvim/plugged
+nvim/.config/nvim/spell
 !vim/.vim/colors
 i3/.config/i3/lock.png
