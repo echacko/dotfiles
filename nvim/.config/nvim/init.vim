@@ -24,6 +24,7 @@ Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
+" Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'                              " Make braces colourful
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'liuchengxu/vista.vim'                             " Tag bar
@@ -44,7 +45,6 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Language server plugins
 Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
 Plug 'nvim-lua/completion-nvim'                           " Auto-completion
-Plug 'nvim-lua/diagnostic-nvim'                           " diagnostics msgs
 Plug 'nvim-treesitter/nvim-treesitter'                    " nvim treesiter
 Plug 'nvim-treesitter/completion-treesitter'              " completion srcs
 Plug 'plasticboy/vim-markdown'                            " Markdown
@@ -55,6 +55,8 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Color
 Plug 'joshdick/onedark.vim'
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+Plug 'arcticicestudio/nord'
 call plug#end()
 
 "}}}
@@ -85,8 +87,8 @@ let g:loaded_2html_plugin = 1   " Never going to use 2html
 let g:loaded_zipPlugin = 1      " To see files inside zip archive
 let loaded_gzip = 1             " inside gzip archive
 let g:loaded_tarPlugin = 1      " tar archive
-" let loaded_matchit = 1          " Disable matchit.vim
-" let g:loaded_matchparen = 1     " matchparen.vim
+" let loaded_matchit = 1          " Disable matchit.vim let
+" g:loaded_matchparen = 1     " matchparen.vim
 
 " Ignore certain files and folders when globbing
 set wildignore+=*.o,*.obj,*.bin,*.dll,*.exe
@@ -95,9 +97,21 @@ set wildignore+=*.jpg,*.png,*.jpeg,*.gif,*.bmp,*.tiff
 set wildignore+=*.pyc
 set wildignore+=*.aux,*.bbl,*.blg,*.brf,*.fls,*.fdb_latexmk,*.synctex.gz,*.pdf
 
-" Close location list or quickfix list if they are present,
-" see https://goo.gl/uXncnS
+" Format options, see :h fo-table
+set formatoptions-=a    " No auto format of para
+set formatoptions-=t    " No auto wrap text using textwidth
+set formatoptions+=c    " Auto wrap comments using tw
+set formatoptions+=q    " Allow formatting using gq
+set formatoptions-=o    " Do not continue comments after hitting o, O
+set formatoptions+=r    " Continue comments after hitting <CR>
+
+" Close location list or quickfix list if they are present, see
+" https://goo.gl/uXncnS
 nnoremap<silent> \x :windo lclose <bar> cclose<CR>
+
+if has('nvim') && executable('nvr')
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
 " }}}
 
 " Colors {{{
@@ -117,7 +131,7 @@ endif
 " Theme
 let base16colorspace=256        " enable if using base16-shell
 let g:hybrid_use_Xresources = 1
-colorscheme onedark
+colorscheme aurora
 let g:sonokai_style = 'andromeda'
 
 " Transpancey for text and buffer

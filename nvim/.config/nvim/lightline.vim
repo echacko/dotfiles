@@ -1,6 +1,6 @@
 " Lightline settings
 let g:lightline = {
-\ 'colorscheme': 'onedark',
+\ 'colorscheme': 'nord',
 \ }
 
 let g:lightline.active = {
