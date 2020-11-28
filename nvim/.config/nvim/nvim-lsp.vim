@@ -24,16 +24,13 @@ nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <leader>r <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 
-let g:diagnostic_enable_virtual_text = 1      " Show msg at eol
-let g:diagnostic_trimmed_virtual_text = '20'  " Lenght of msg
-let g:diagnostic_insert_delay = 1             " Do not show msg while in INS
-let g:diagnostic_virtual_text_prefix = ' '
-call sign_define("LspDiagnosticsErrorSign", {"text" : "✗", "texthl" : "LspDiagnosticsError"})
-call sign_define("LspDiagnosticsWarningSign", {"text" : "!!", "texthl" : "LspDiagnosticsWarning"})
-call sign_define("LspDiagnosticsInformationSign", {"text" : "--", "texthl" : "LspDiagnosticsInformation"})
-call sign_define("LspDiagnosticsHintSign", {"text" : "~~", "texthl" : "LspDiagnosticsHint"})
-nnoremap ]d <cmd>NextDiagnosticCycle<CR>
-nnoremap [d <cmd>PrevDiagnosticCycle<CR>
+call sign_define("LspDiagnosticsSignError", {"text" : "✗", "texthl" : "LspDiagnosticsDefaultError"})
+call sign_define("LspDiagnosticsSignWarning", {"text" : "!", "texthl" : "LspDiagnosticsDefaultWarning"})
+call sign_define("LspDiagnosticsSignInformation", {"text" : "I", "texthl" : "LspDiagnosticsDefaultInformation"})
+call sign_define("LspDiagnosticsSignHint", {"text" : "H", "texthl" : "LspDiagnosticsDefaultHint"})
+nnoremap ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <leader>D <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -73,23 +70,72 @@ let g:completion_chain_complete_list = {
       \ ],
       \}
 
+let g:show_signs=v:false
 lua <<EOF
-local nvim_lsp = require("nvim_lsp")
+local nvim_lsp = require("lspconfig")
+local nvim_lsp_util = require("lspconfig/util")
 local nvim_completion = require("completion")
-local nvim_diagnostic = require("diagnostic")
 local nvim_treesitter = require("nvim-treesitter.configs")
 
 local custom_attach = function()
   nvim_completion.on_attach()
-  nvim_diagnostic.on_attach()
   print("LSP Attached.")
 end
 
 nvim_lsp.pyls.setup{ on_attach = custom_attach }
 
-nvim_lsp.texlab.setup{ on_attach = custom_attach }
+nvim_lsp.clangd.setup{
+  on_attach = custom_attach,
+  default_config = {
+    cmd = {
+      "clangd", "--background-index", "--pch-storage=memory",
+      "--clang-tidy", "--suggest-missing-includes"
+    },
+    filetypes = {"c", "cpp", "objc", "objcpp"},
+    root_dir = nvim_lsp_util.root_pattern("compile_commands.json",
+                                 "build/compile_commands.json",
+                                 "compile_flags.txt",
+                                 ".git"),
+    init_option = {
+      fallbackFlags = {
+        "-std=c++17"
+      }
+    }
+  }
+}
 
-nvim_lsp.clangd.setup{ on_attach = custom_attach }
+nvim_lsp.texlab.setup{
+  on_attach = custom_attach,
+  settings = {
+    bibtex = {
+      formatting = {
+        lineLength = 120
+      }
+    },
+    latex = {
+      build = {
+        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-pvc" },
+        executable = "latexmk",
+        onSave = true
+      },
+      forwardSearch = {
+        executable = "zathura",
+        args = {"--synctex-forward", "%l:1:%f", "%p"},
+        onSave = true
+      },
+      lint = {
+        onChange = true
+      }
+    }
+  }
+}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    update_in_insert = false,
+  }
+)
 
 nvim_treesitter.setup {
   ensure_installed = "maintained",
