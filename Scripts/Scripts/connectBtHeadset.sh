@@ -4,4 +4,4 @@
 #
 
 bluetoothctl power on
-bluetoothctl connect F4:BC:DA:02:4B:2F
+bluetoothctl connect E4:41:22:74:68:0C

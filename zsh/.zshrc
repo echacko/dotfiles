@@ -106,10 +106,12 @@ if [ -x /usr/bin/lsd ]; then
   alias l='lsd $LS_OPTIONS'
   alias ll='lsd $LS_OPTIONS -lrt -hF'
   alias ls='lsd $LS_OPTIONS -hF'
+  alias lsl='lsd $LS_OPTIONS -l -hF'
 else
   alias l='ls $LS_OPTIONS'
   alias ll='ls $LS_OPTIONS -l -N -hF'
   alias ls='ls $LS_OPTIONS -N -hF'
+  alias lsl='lsd $LS_OPTIONS -l -hF'
 fi
 alias grep='grep --color=auto'
 export LESS="-R"
