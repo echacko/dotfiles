@@ -137,6 +137,9 @@ bindsym Print exec "scrot -z ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png; 
 ###
 # Workspace
 ###
+## Define monitors
+set $primary eDP-1
+set $seconday DP-1
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -296,6 +299,9 @@ for_window [class="(?i)Pavucontrol"] floating enable, move absolute center
 
 # Assign Firefox to workspace 2
 assign [class="(?i)Firefox"] $ws2
+workspace $ws1 output $primary
+workspace $ws2 output $primary
+workspace $ws3 output $secondary
 
 # Assign Thunderbird to workspace 10
 assign [class="Thunderbird"]  $ws10
@@ -316,8 +322,9 @@ for_window [title="Microsoft Teams Notification"] floating enable
 #
 exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 
-#Wallpaper Config
-exec_always --no-startup-id feh --randomize --bg-fill --no-fehbg ~/Pictures/Wallpapers/
+# Wallpaper Config
+# exec_always --no-startup-id feh --randomize --bg-fill --no-fehbg ~/Pictures/Wallpapers/
+exec_always --no-startup-id $HOME/.fehbg
 
 # Start autolock
 exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "~/.config/i3/dpms-i3lock.sh" -detectsleep
