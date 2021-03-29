@@ -63,5 +63,3 @@ nvim_treesitter.setup {
     },
   },
 }
-
-print("Loaded treesitter.lua")

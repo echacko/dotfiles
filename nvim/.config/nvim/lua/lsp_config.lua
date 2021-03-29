@@ -1,25 +1,23 @@
 local nvim_lsp = require("lspconfig")
 local nvim_lsp_util = require("lspconfig/util")
 
-local function map(mode, lhs, rhs, opts)
-    local options = {noremap = true}
-    if opts then
-        options = vim.tbl_extend("force", options, opts)
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
+local map  =   vim.api.nvim_set_keymap
 local opts = {noremap = true, silent = true}
 
 -- Mappings.
-map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>"     , opts)
-map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>"    , opts)
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>"     , opts)
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>" , opts)
+map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 map("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 
+map("n", "ga", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
+map("n", "gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+map("n", "gA", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+map("n", "gF", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
 map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-map("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+map("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
 map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
 map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
@@ -40,10 +38,19 @@ local custom_attach = function()
   print("LSP Attached.")
 end
 
-nvim_lsp.pyls.setup{ on_attach = custom_attach }
+-- LSP snippet completion support
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+
+-- LSP server configs
+-- Python
+nvim_lsp.pyls.setup{ on_attach = custom_attach, capabilities = capabilities }
+
+-- C/C++
 nvim_lsp.clangd.setup{
   on_attach = custom_attach,
+  capabilities = capabilities,
   default_config = {
     cmd = {
       "clangd", "--background-index", "--pch-storage=memory",
@@ -62,8 +69,10 @@ nvim_lsp.clangd.setup{
   }
 }
 
+-- LaTeX
 nvim_lsp.texlab.setup{
   on_attach = custom_attach,
+  capabilities = capabilities,
   settings = {
     bibtex = {
       formatting = {
@@ -88,9 +97,10 @@ nvim_lsp.texlab.setup{
   }
 }
 
-
+-- Lua
 require'lspconfig'.sumneko_lua.setup {
   on_attach = custom_attach,
+  capabilities = capabilities,
   cmd = {
     "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua"
   },
@@ -127,5 +137,3 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
   }
 )
-
-print("Loaded lsp_config.lua")

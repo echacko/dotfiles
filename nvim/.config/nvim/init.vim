@@ -2,6 +2,11 @@
 "  NeoVIM Configuration File
 "
 "
+" TODO: Replace denite by telescope
+" TODO: Replace nerdtree
+" TODO: Replace lighline
+" TODO: Remove unwanted plugins
+"
 
 " Compability {{{
 set nocompatible   " use vim defaults instead of vi
@@ -33,12 +38,10 @@ Plug 'unblevable/quick-scope'                           " highlights for f,F
 Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
 
 " Snippets
-Plug 'norcalli/snippets.nvim'                           " Snippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'                       " Default snippets def
-Plug 'honza/vim-snippets'                               " More snippets def
-Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip'                                " Snippet manager
 Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'                     " Snippets defs
+
 
 " Document genration
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -57,7 +60,6 @@ Plug 'neovim/nvim-lspconfig'    " NVim LSP client
 Plug 'nvim-lua/lsp-status.nvim' " generate status line components using LSP
 
 Plug 'hrsh7th/nvim-compe'
-Plug 'nvim-lua/completion-nvim' " Auto-completion
 Plug 'kosayoda/nvim-lightbulb'  " code-action
 
 Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
@@ -231,6 +233,8 @@ source ~/.config/nvim/key-mapping.vim
 
 " Pluging Configs {{{
 source ~/.config/nvim/plugin-config.vim
+
+" Load lua conifs
 lua require 'init'
 
 " }}}
