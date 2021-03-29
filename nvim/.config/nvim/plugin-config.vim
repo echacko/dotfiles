@@ -7,7 +7,7 @@ source ~/.config/nvim/lightline.vim
 " source ~/.config/nvim/statusline.vim
 
 " Denite
-source ~/.config/nvim/denite.vim
+" source ~/.config/nvim/denite.vim
 
 " CoC-Nvim
 " source ~/.config/nvim/nvim-lsp.vim

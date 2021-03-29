@@ -36,6 +36,9 @@ Plug 'liuchengxu/vista.vim'                             " Tag bar
 Plug 'unblevable/quick-scope'                           " highlights for f,F
 
 Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Snippets
 Plug 'hrsh7th/vim-vsnip'                                " Snippet manager
