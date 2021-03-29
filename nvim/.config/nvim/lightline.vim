@@ -1,6 +1,6 @@
 " Lightline settings
 let g:lightline = {
-\ 'colorscheme': 'nord',
+\ 'colorscheme': 'onedark',
 \ }
 
 let g:lightline.active = {
@@ -143,4 +143,11 @@ function! NearestMethodOrFunction() abort
   catch
   endtry
   return ''
+endfunction
+
+" LSP status
+function! StatusLSP() abort
+  let status = luaeval('require("statusline").status()')
+
+  return trim(status)
 endfunction

@@ -31,32 +31,49 @@ Plug 'liuchengxu/vista.vim'                             " Tag bar
 Plug 'unblevable/quick-scope'                           " highlights for f,F
 
 Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
+
+" Snippets
+Plug 'norcalli/snippets.nvim'                           " Snippets
+Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'                       " Default snippets def
 Plug 'honza/vim-snippets'                               " More snippets def
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+" Document genration
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 
 " Plugins for file explorer, linter and latex compiler.
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'vimwiki/vimwiki'
+Plug 'plasticboy/vim-markdown'                     " Markdown
 
 " Plugins for file explorer, linter and latex compiler.
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " Language server plugins
-Plug 'neovim/nvim-lspconfig'                              " NVim LSP client
-Plug 'nvim-lua/completion-nvim'                           " Auto-completion
-Plug 'nvim-treesitter/nvim-treesitter'                    " nvim treesiter
-Plug 'nvim-treesitter/completion-treesitter'              " completion srcs
-Plug 'plasticboy/vim-markdown'                            " Markdown
+Plug 'neovim/nvim-lspconfig'    " NVim LSP client
+Plug 'nvim-lua/lsp-status.nvim' " generate status line components using LSP
+
+Plug 'hrsh7th/nvim-compe'
+Plug 'nvim-lua/completion-nvim' " Auto-completion
+Plug 'kosayoda/nvim-lightbulb'  " code-action
+
+Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
+" Plug 'nvim-treesitter/completion-treesitter'       " completion srcs
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Color
+Plug 'chriskempson/base16-vim'
 Plug 'joshdick/onedark.vim'
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
-Plug 'arcticicestudio/nord'
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'Th3Whit3Wolf/onebuddy'
+
 call plug#end()
 
 "}}}
@@ -131,14 +148,15 @@ endif
 " Theme
 let base16colorspace=256        " enable if using base16-shell
 let g:hybrid_use_Xresources = 1
-colorscheme aurora
-let g:sonokai_style = 'andromeda'
+colorscheme onedark
+" let g:sonokai_style = 'andromeda'
+
 
 " Transpancey for text and buffer
 hi Normal ctermfg=250 ctermbg=none
 hi NonText ctermfg=250 ctermbg=none
 hi LineNr ctermfg=250 ctermbg=none
-hi SignColumn ctermfg=250 ctermbg=none
+" hi SignColumn ctermfg=250 ctermbg=none
 hi vertsplit ctermfg=250 ctermbg=none
 " }}}
 
@@ -213,6 +231,7 @@ source ~/.config/nvim/key-mapping.vim
 
 " Pluging Configs {{{
 source ~/.config/nvim/plugin-config.vim
+lua require 'init'
 
 " }}}
 
