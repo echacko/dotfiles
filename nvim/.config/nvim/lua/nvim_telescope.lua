@@ -3,6 +3,17 @@ local themes = require("telescope.themes")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
 
+local map = vim.api.nvim_set_keymap
+local opt = {noremap = true, silent = true}
+
+-- mappings
+map("n", "<C-p>",      [[<Cmd>lua require('telescope.builtin').find_files()<CR>]], opt)
+map("n", "<C-S-p>",      [[<Cmd>lua require('telescope.builtin').treesitter()<CR>]], opt)
+map("n", "<Leader>fg", [[<Cmd>lua require('telescope.builtin').grep_string()<CR>]], opt)
+map("n", "<Leader>fG", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]], opt)
+map("n", "<Leader>fb", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]], opt)
+map("n", "<Leader>fo", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]], opt)
+
 telescope.setup{
   defaults = {
     vimgrep_arguments = {
@@ -53,12 +64,3 @@ telescope.setup{
   }
 }
 
-local opt = {noremap = true, silent = true}
-
--- mappings 
-vim.api.nvim_set_keymap("n", "<C-p>",      [[<Cmd>lua require('telescope.builtin').find_files()<CR>]], opt)
-vim.api.nvim_set_keymap("n", "<S-p>",      [[<Cmd>lua require('telescope.builtin').treesitter()<CR>]], opt)
-vim.api.nvim_set_keymap("n", "<Leader>fg", [[<Cmd>lua require('telescope.builtin').grep_string()<CR>]], opt)
-vim.api.nvim_set_keymap("n", "<Leader>fG", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]], opt)
-vim.api.nvim_set_keymap("n", "<Leader>fb", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]], opt)
-vim.api.nvim_set_keymap("n", "<Leader>fo", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]], opt)

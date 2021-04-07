@@ -2,10 +2,10 @@
 "  NeoVIM Configuration File
 "
 "
-" TODO: Replace denite by telescope
 " TODO: Replace nerdtree
 " TODO: Replace lighline
 " TODO: Remove unwanted plugins
+" TODO: Configure telescope properly
 "
 
 " Compability {{{
@@ -35,7 +35,7 @@ Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'liuchengxu/vista.vim'                             " Tag bar
 Plug 'unblevable/quick-scope'                           " highlights for f,F
 
-Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
+" Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -76,8 +76,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Color
 Plug 'chriskempson/base16-vim'
 Plug 'joshdick/onedark.vim'
-Plug 'tjdevries/colorbuddy.vim'
-Plug 'Th3Whit3Wolf/onebuddy'
+Plug 'RRethy/nvim-base16'
 
 call plug#end()
 
@@ -153,8 +152,9 @@ endif
 " Theme
 let base16colorspace=256        " enable if using base16-shell
 let g:hybrid_use_Xresources = 1
-colorscheme onedark
-" let g:sonokai_style = 'andromeda'
+" colorscheme onedark
+lua require('base16-colorscheme').setup('onedark')
+
 
 
 " Transpancey for text and buffer

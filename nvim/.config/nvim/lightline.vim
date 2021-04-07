@@ -139,7 +139,7 @@ endfunction
 " TODO: Maybe use tree-sitter for this?
 function! NearestMethodOrFunction() abort
   try
-    return get(b:, 'vista_nearest_method_or_function', '')
+    return nvim_treesitter#statusline(90)
   catch
   endtry
   return ''

@@ -54,3 +54,6 @@ vmap <leader>ta :Tabularize /
 
 " Doge
 let g:doge_doc_standard_python = 'numpy'
+
+" nvim-lightbulb
+autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
