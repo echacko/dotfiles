@@ -2,6 +2,11 @@
 "  NeoVIM Configuration File
 "
 "
+" TODO: Replace nerdtree
+" TODO: Replace lighline
+" TODO: Remove unwanted plugins
+" TODO: Configure telescope properly
+"
 
 " Compability {{{
 set nocompatible   " use vim defaults instead of vi
@@ -23,36 +28,55 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
-Plug 'jiangmiao/auto-pairs'                             " For auto-close feature
-Plug 'luochen1990/rainbow'                              " Make braces colourfull
+Plug 'Townk/vim-autoclose'                              " For auto-close feature
+" Plug 'jiangmiao/auto-pairs'
+Plug 'luochen1990/rainbow'                              " Make braces colourful
 Plug 'godlygeek/tabular'                                " Text alignment
-Plug 'easymotion/vim-easymotion'                        " Easy vim motions
 Plug 'liuchengxu/vista.vim'                             " Tag bar
+Plug 'unblevable/quick-scope'                           " highlights for f,F
 
-Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
-Plug 'Shougo/neosnippet-snippets'                       " Default snippets def
-Plug 'honza/vim-snippets'                               " More snippets def
+" Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Snippets
+Plug 'hrsh7th/vim-vsnip'                                " Snippet manager
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'                     " Snippets defs
+
+
+" Document genration
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 
 " Plugins for file explorer, linter and latex compiler.
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'vimwiki/vimwiki'
+Plug 'plasticboy/vim-markdown'                     " Markdown
 
 " Plugins for file explorer, linter and latex compiler.
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " Language server plugins
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'jackguo380/vim-lsp-cxx-highlight'                   " Semanitc highlight
-Plug 'lervag/vimtex'                                      " Latex
-Plug 'plasticboy/vim-markdown'                            " Markdown
+Plug 'neovim/nvim-lspconfig'    " NVim LSP client
+Plug 'nvim-lua/lsp-status.nvim' " generate status line components using LSP
+
+Plug 'hrsh7th/nvim-compe'
+Plug 'kosayoda/nvim-lightbulb'  " code-action
+
+Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
+" Plug 'nvim-treesitter/completion-treesitter'       " completion srcs
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Color
-Plug 'chriskempson/base16-vim'                          " Base-16 theme
+Plug 'chriskempson/base16-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'RRethy/nvim-base16'
 
 call plug#end()
 
@@ -84,8 +108,8 @@ let g:loaded_2html_plugin = 1   " Never going to use 2html
 let g:loaded_zipPlugin = 1      " To see files inside zip archive
 let loaded_gzip = 1             " inside gzip archive
 let g:loaded_tarPlugin = 1      " tar archive
-" let loaded_matchit = 1          " Disable matchit.vim
-" let g:loaded_matchparen = 1     " matchparen.vim
+" let loaded_matchit = 1          " Disable matchit.vim let
+" g:loaded_matchparen = 1     " matchparen.vim
 
 " Ignore certain files and folders when globbing
 set wildignore+=*.o,*.obj,*.bin,*.dll,*.exe
@@ -94,9 +118,21 @@ set wildignore+=*.jpg,*.png,*.jpeg,*.gif,*.bmp,*.tiff
 set wildignore+=*.pyc
 set wildignore+=*.aux,*.bbl,*.blg,*.brf,*.fls,*.fdb_latexmk,*.synctex.gz,*.pdf
 
-" Close location list or quickfix list if they are present,
-" see https://goo.gl/uXncnS
+" Format options, see :h fo-table
+set formatoptions-=a    " No auto format of para
+set formatoptions-=t    " No auto wrap text using textwidth
+set formatoptions+=c    " Auto wrap comments using tw
+set formatoptions+=q    " Allow formatting using gq
+set formatoptions-=o    " Do not continue comments after hitting o, O
+set formatoptions+=r    " Continue comments after hitting <CR>
+
+" Close location list or quickfix list if they are present, see
+" https://goo.gl/uXncnS
 nnoremap<silent> \x :windo lclose <bar> cclose<CR>
+
+if has('nvim') && executable('nvr')
+  let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
 " }}}
 
 " Colors {{{
@@ -104,19 +140,28 @@ syntax enable                   " enable syntax processing
 
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
+  set t_Co=256
 endif
+
+" Or if you have Neovim >= 0.1.5
+if (has("termguicolors"))
+ set termguicolors            " Enables 24-bit RGB color in the terminal
+endif
+
 "
 " Theme
-let base16colorspace=256        " Access colors present in 256 colorspace
+let base16colorspace=256        " enable if using base16-shell
 let g:hybrid_use_Xresources = 1
-colorscheme base16-gruvbox-dark-soft
+" colorscheme onedark
+lua require('base16-colorscheme').setup('onedark')
+
+
 
 " Transpancey for text and buffer
 hi Normal ctermfg=250 ctermbg=none
 hi NonText ctermfg=250 ctermbg=none
 hi LineNr ctermfg=250 ctermbg=none
-hi SignColumn ctermfg=250 ctermbg=none
+" hi SignColumn ctermfg=250 ctermbg=none
 hi vertsplit ctermfg=250 ctermbg=none
 " }}}
 
@@ -191,6 +236,9 @@ source ~/.config/nvim/key-mapping.vim
 
 " Pluging Configs {{{
 source ~/.config/nvim/plugin-config.vim
+
+" Load lua conifs
+lua require 'init'
 
 " }}}
 

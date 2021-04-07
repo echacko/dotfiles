@@ -1,15 +1,14 @@
 " Lightline settings
 let g:lightline = {
-\ 'colorscheme': 'jellybeans',
+\ 'colorscheme': 'onedark',
 \ }
 
 let g:lightline.active = {
 \ 'left' : [ [ 'mode', 'paste' ],
-\            [ 'filename', 'git', 'diagnostic', 'blame' ],
+\            [ 'filename', 'git', 'method' ],
 \          ],
 \ 'right': [ [ 'lineinfo' ],
-\            [ 'filetype' ],
-\            [ 'cocstatus'] ]
+\            [ 'filetype' ] ]
 \ }
 
 let g:lightline.inactive = {
@@ -34,9 +33,8 @@ let g:lightline.component_function = {
 \ 'filename' : 'LightlineFilename',
 \ 'filetype' : 'LightlineFiletype',
 \ 'mode'     : 'LightlineMode',
-\ 'cocstatus': 'coc#status',
 \ 'git'      : 'LightlineGitStatus',
-\ 'blame'    : 'LightlineGitBlame',
+\ 'method'   : 'NearestMethodOrFunction',
 \}
 
 let g:lightline.separator = {
@@ -82,8 +80,9 @@ function! LightlineLineNumber()
   let end = line('$')
   let col = col('.')
   let per = cur * 100 / end
+  " printf("%2d%% ☰  %3d/%-3d:%-2d", per, cur, end, col ) :
   return winwidth(0) > 70 ?
-    \ printf("%2d%% ☰  %3d/%-3d:%-2d", per, cur, end, col ) :
+    \ printf("%2d%% ☰  %3d:%-2d", per, cur, col ) :
     \ printf("%2d%%", per)
 endfunction
 
@@ -97,7 +96,7 @@ endfunction
 
 function! LightlineFilename()
   let fname = expand('%:t')
-  return  &ft == 'vista' ? 'Vista' :
+  return  &ft == 'vista_kind' ? 'Vista' :
         \ &ft == 'nerdtree' ? 'NERDTree' :
         \ &ft == 'qf' ? 'QuickFix' :
         \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
@@ -113,19 +112,42 @@ function! LightlineMode()
   return winwidth(0) > 70 ? lightline#mode() : ''
 endfunction
 
-function! LightlineGitBlame() abort
-  let blame = get(b:, 'coc_git_blame', '')
-  " return blame
-  return winwidth(0) > 120 ? blame : ''
-endfunction
+let g:lightline.mode_map = {
+    \ 'n' : 'N',
+    \ 'i' : 'I',
+    \ 'R' : 'R',
+    \ 'v' : 'VI',
+    \ 'V' : 'VL',
+    \ "\<C-v>": 'VB',
+    \ 'c' : 'C',
+    \ 's' : 'S',
+    \ 'S' : 'SL',
+    \ "\<C-s>": 'SB',
+    \ 't': 'T',
+    \ }
 
 function! LightlineGitStatus()
   if expand('%:t') !~? 'vista\|Gundo\|NERD'
-    try
-      let status = get(g:, 'coc_git_status')
-    catch
-    endtry
-    return status == '0' ? '' : status
+    let branch = FugitiveHead()
+    let mark = ' '
+
+    return branch !=# '' ? mark.branch : ''
   endif
   return ''
+endfunction
+
+" TODO: Maybe use tree-sitter for this?
+function! NearestMethodOrFunction() abort
+  try
+    return nvim_treesitter#statusline(90)
+  catch
+  endtry
+  return ''
+endfunction
+
+" LSP status
+function! StatusLSP() abort
+  let status = luaeval('require("statusline").status()')
+
+  return trim(status)
 endfunction

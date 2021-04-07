@@ -3,14 +3,19 @@ let g:python3_host_prog='/usr/bin/python'
 
 " Lightline
 source ~/.config/nvim/lightline.vim
+" source ~/.config/nvim/icon.vim
+" source ~/.config/nvim/statusline.vim
 
 " Denite
-source ~/.config/nvim/denite.vim
+" source ~/.config/nvim/denite.vim
 
 " CoC-Nvim
-source ~/.config/nvim/coc.vim
+" source ~/.config/nvim/nvim-lsp.vim
 
 " NERDTree
+" Open NerdTree file browser
+nnoremap <leader>e :NERDTreeToggle<CR>
+
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeQuitOnOpen = 1
 " Hide the Nerdtree status line to avoid clutter
@@ -24,9 +29,9 @@ let g:NERDTreeDirArrowCollapsible = '⬎'
 " Rainbow Braces
 let g:rainbow_active = 1
 
-" Easymotion
-"   <leader>w - Easy-motion highlights first word letters bi-directionally
-map <leader>f <Plug>(easymotion-bd-w)
+" Quick-scope
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " vim-tex
 let g:vimtex_compiler_progname = 'nvr'
@@ -35,3 +40,24 @@ let g:vimtex_view_method = 'zathura'
 "VimWiki
 let g:vimwiki_list = [{'path': '~/work/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+
+" Vista
+" Toggle tagbar
+nnoremap <leader>tt :Vista!!<CR>
+
+let g:vista_default_executive = 'nvim_lsp'      " Specify the LSP
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]      " Nice fonts
+let g:vista#renderer#enable_icon = 1            " Show icons
+let g:vista_disable_statusline = 1              " disable statusline
+
+
+" Tabular
+" Prepare tabularize
+nmap <leader>ta :'<,'> Tabularize /
+vmap <leader>ta :Tabularize /
+
+" Doge
+let g:doge_doc_standard_python = 'numpy'
+
+" nvim-lightbulb
+autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()

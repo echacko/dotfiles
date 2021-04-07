@@ -1,6 +1,12 @@
 " Map leader
 " let mapleader = ','
 
+" Disable arrow keys in all mode
+inoremap <Up>     <C-o>:echo "--> k <-- "<CR>
+inoremap <Down>   <C-o>:echo "--> j <-- "<CR>
+inoremap <Right>  <C-o>:echo "--> l <-- "<CR>
+inoremap <Left>   <C-o>:echo "--> h <-- "<CR>
+
 " Turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
 
@@ -73,14 +79,7 @@ cmap <M-j> <down>
 " Manually refresh file
 nmap <F5> :e!<cr>
 
-" Open NerdTree file browser
-nnoremap <leader>e :NERDTreeToggle<CR>
-
-" Toggle Tagbar
-nnoremap <leader>tt :Vista!!<CR>
-
-" Tabular
-" Prepare tabularize
-nmap <leader>ta :'<,'> Tabularize /
-vmap <leader>ta :Tabularize /
+" Helpful delete/change into blackhole buffer
+nmap <leader>d "_d
+nmap <leader>c "_c
 
