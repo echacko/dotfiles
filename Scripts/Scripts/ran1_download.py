@@ -21,13 +21,21 @@ ran1_tdoc_url = ran1_meeting_url + "/Docs/" + tdoc_id + ".zip"
 response = http.request('GET', ran1_tdoc_url, preload_content=False)
 
 if (response.status != 200):
-    print(f"Invalid URL :{ran1_meeting_url}")
-    exit(255)
+    print(f"Invalid URL :{ran1_tdoc_url}")
+
+    # Search in Inbox folder if tdco is not found in docs
+    ran1_tdoc_url = ran1_meeting_url + "/Inbox/" + tdoc_id + ".zip"
+    print("Trying Inbox link")
+    response = http.request('GET', ran1_tdoc_url, preload_content=False)
+    if (response.status != 200):
+        print(f"Invalid URL :{ran1_tdoc_url}")
+
+        exit(255)
 
 filename = tdoc_id + ".zip"
 file_size = int(response.headers["Content-Length"])
 chunk_size = 8192
-print(f"Downloading {filename} : {file_size}")
+print(f"Downloading {filename} : {file_size / 1024:.2f}KB")
 
 with open(filename, 'wb') as out:
     while True:
