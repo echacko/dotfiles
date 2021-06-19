@@ -18,7 +18,7 @@
 	untracked = red bold
 
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = /home/echacko/.gitignore_global
 	autocrlf = input
 
@@ -26,7 +26,7 @@
 	user = echacko
 
 [diff]
-	tool = vimdiff
+	tool = meld
 [difftool]
 	prompt = false
 
@@ -53,4 +53,4 @@
 	l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph
 	d = difftool
 [init]
-	defaultBranch = trunk
+	defaultBranch = dev
