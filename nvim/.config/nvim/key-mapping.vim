@@ -33,8 +33,8 @@ nnoremap <C-M-J> <C-w>+
 nnoremap <tab> <C-W>w
 
 " Buffer selection
-nnoremap <leader>n :bn<CR>
-nnoremap <leader>p :bp<CR>
+" nnoremap <leader>n :bn<CR>
+" nnoremap <leader>p :bp<CR>
 nnoremap <leader><Tab> :b#<CR>
 
 " Spell checking
@@ -77,9 +77,16 @@ cmap <M-k> <up>
 cmap <M-j> <down>
 
 " Manually refresh file
-nmap <F5> :e!<cr>
+" nmap <F5> :e!<cr>
 
 " Helpful delete/change into blackhole buffer
 nmap <leader>d "_d
 nmap <leader>c "_c
 
+" Copy/paste from clipboard
+nnoremap <leader>y "+y
+nnoremap <leader>p "+p
+
+" Insert date using F5
+:nnoremap <F6> "=strftime("%d/%m/%y %H:%M:%S ")<CR>P
+:inoremap <F6> <C-R>=strftime("%d/%m/%y %H:%M:%S ")<CR>

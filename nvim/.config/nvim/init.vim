@@ -30,7 +30,7 @@ Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
 " Plug 'jiangmiao/auto-pairs'
-Plug 'luochen1990/rainbow'                              " Make braces colourful
+" Plug 'luochen1990/rainbow'                              " Make braces colourful
 Plug 'godlygeek/tabular'                                " Text alignment
 Plug 'liuchengxu/vista.vim'                             " Tag bar
 Plug 'unblevable/quick-scope'                           " highlights for f,F
@@ -54,6 +54,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'vimwiki/vimwiki'
 Plug 'plasticboy/vim-markdown'                     " Markdown
+Plug 'lervag/vimtex'                               " LaTeX
 
 " Plugins for file explorer, linter and latex compiler.
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -68,10 +69,15 @@ Plug 'kosayoda/nvim-lightbulb'  " code-action
 Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
 " Plug 'nvim-treesitter/completion-treesitter'       " completion srcs
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'p00f/nvim-ts-rainbow'                        " Rainbow using treesitter
+
+" Debugge
+Plug 'mfussenegger/nvim-dap'
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " Color
 Plug 'chriskempson/base16-vim'

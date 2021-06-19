@@ -12,7 +12,7 @@ nvim_treesitter.setup {
     use_languagetree = true,
   },
   incremental_selection = {
-    enable = true,
+    enable = false,
     keymaps = {
       init_selection = "gnn",
       node_incremental = "grn",
@@ -63,3 +63,13 @@ nvim_treesitter.setup {
     },
   },
 }
+
+-- TS rainbow config
+nvim_treesitter.setup {
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+  }
+}
+
+

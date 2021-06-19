@@ -8,11 +8,10 @@ local opt = {noremap = true, silent = true}
 
 -- mappings
 map("n", "<C-p>",      [[<Cmd>lua require('telescope.builtin').find_files()<CR>]], opt)
-map("n", "<C-S-p>",      [[<Cmd>lua require('telescope.builtin').treesitter()<CR>]], opt)
-map("n", "<Leader>fg", [[<Cmd>lua require('telescope.builtin').grep_string()<CR>]], opt)
-map("n", "<Leader>fG", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]], opt)
-map("n", "<Leader>fb", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]], opt)
-map("n", "<Leader>fo", [[<Cmd>lua require('telescope.builtin').oldfiles()<CR>]], opt)
+map("n", "<Leader>ft", [[<Cmd>lua require('telescope.builtin').treesitter()<CR>]], opt)
+map("n", "<Leader>fG", [[<Cmd>lua require('telescope.builtin').grep_string()<CR>]], opt)
+map("n", "<Leader>fg", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]], opt)
+map("n", "gr",         [[<Cmd>lua require('telescope.builtin').lsp_references()<CR>]], opt)
 
 telescope.setup{
   defaults = {
@@ -61,6 +60,15 @@ telescope.setup{
 
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = previewers.buffer_previewer_maker
+  },
+
+  -- Config for file picker
+  pickers = {
+    find_files = {
+      sort_lastused = true,
+      theme = "dropdown",
+      previewer = false,
+    }
   }
 }
 

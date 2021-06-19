@@ -1,22 +1,38 @@
 local nvim_lsp = require("lspconfig")
 local nvim_lsp_util = require("lspconfig/util")
 
+-- Set log level if needed
+-- vim.lsp.set_log_level("debug")
+
 local map  =   vim.api.nvim_set_keymap
 local opts = {noremap = true, silent = true}
+
+local function preview_location_callback(_, _, result)
+  if result == nil or vim.tbl_isempty(result) then
+    return nil
+  end
+  vim.lsp.util.preview_location(result[1])
+end
+
+function PeekDefinition()
+  local params = vim.lsp.util.make_position_params()
+  return vim.lsp.buf_request(0, 'textDocument/definition', params, preview_location_callback)
+end
 
 -- Mappings.
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-map("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+-- map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts) -- telescope
+-- map("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 
 map("n", "ga", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
 map("n", "gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 map("n", "gA", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 map("n", "gF", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+-- map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+map("n", "K", "<cmd>lua PeekDefinition()<CR>", opts)
 map("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
 map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
@@ -51,22 +67,22 @@ nvim_lsp.pyls.setup{ on_attach = custom_attach, capabilities = capabilities }
 nvim_lsp.clangd.setup{
   on_attach = custom_attach,
   capabilities = capabilities,
-  default_config = {
-    cmd = {
-      "clangd", "--background-index", "--pch-storage=memory",
-      "--clang-tidy", "--suggest-missing-includes"
-    },
-    filetypes = {"c", "cpp", "objc", "objcpp"},
-    root_dir = nvim_lsp_util.root_pattern("compile_commands.json",
-                                 "build/compile_commands.json",
-                                 "compile_flags.txt",
-                                 ".git"),
-    init_option = {
-      fallbackFlags = {
-        "-std=c++20", "-stdlib=libc++", "-fcoroutines-ts"
-      }
-    }
-  }
+  root_dir = nvim_lsp_util.root_pattern("compile_commands.json",
+                               "build/compile_commands.json",
+                               "compile_flags.txt",
+                               ".git"),
+  cmd = {
+    "clangd", "--background-index", "--pch-storage=memory",
+    "--clang-tidy"
+  },
+  -- default_config = {
+  --   log_level = 2,
+  --   init_option = {
+  --     fallbackFlags = {
+  --       "-std=c++20", "-stdlib=libc++", "-fcoroutines-ts"
+  --     }
+  --   }
+  -- }
 }
 
 -- LaTeX
@@ -81,8 +97,9 @@ nvim_lsp.texlab.setup{
     },
     latex = {
       build = {
-        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-pvc", "%f" },
-        executable = "latexmk",
+        -- args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-pvc", "%f" },
+        args = {"%f", "--synctex", "--keep-logs", "--keep-intermediates"},
+        executable = "tectonic",
         onSave = true
       },
       forwardSearch = {
