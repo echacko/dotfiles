@@ -121,7 +121,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Lockscreen
-bindsym Mod1+$mod1+l exec ~/.config/i3/dpms-i3lock.sh
+bindsym Mod1+$mod1+l exec betterlockscreen -l --off 5 -- --greeter-text="GGMU"
 
 # Volume Controls
 #bindsym Mod1+Shift+Up exec amixer -c 0 -- sset Master playback 5%+
@@ -307,10 +307,10 @@ workspace $ws3 output $secondary
 assign [class="Thunderbird"]  $ws10
 
 # Assign libreoffice to ws6
-assign [class="(?i)libreoffice-writer$"]$ ws6
-assign [class="(?i)soffice"] $ws6
-assign [class="(?i)libreoffice-calc"] $ws6
-assign [class="(?i)libreoffice.*"] $ws6
+# assign [class="(?i)libreoffice-writer$"]$ ws6
+# assign [class="(?i)soffice"] $ws6
+# assign [class="(?i)libreoffice-calc"] $ws6
+# assign [class="(?i)libreoffice.*"] $ws6
 
 
 # For MS-Teams
@@ -327,7 +327,7 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id $HOME/.fehbg
 
 # Start autolock
-exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "~/.config/i3/dpms-i3lock.sh" -detectsleep
+exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "betterlockscreen -l --off 5" -detectsleep
 
 # Show the nm-applet
 exec --no-startup-id nm-applet

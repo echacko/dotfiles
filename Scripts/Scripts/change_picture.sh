@@ -21,7 +21,7 @@ image_file=$(ls -1 $PIC_DIR/ | sort -R | tail -1)
 convert $PIC_DIR/$image_file $PIC_DIR/lockNlogin.png
 
 cp -f $PIC_DIR/lockNlogin.png /usr/share/backgrounds/.
-betterlockscreen -u $PIC_DIR 2>&1 &
+betterlockscreen -u $PIC_DIR --display 1 2>&1 &
 
 exit 0
 
