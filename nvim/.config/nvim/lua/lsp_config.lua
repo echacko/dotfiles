@@ -19,6 +19,20 @@ function PeekDefinition()
   return vim.lsp.buf_request(0, 'textDocument/definition', params, preview_location_callback)
 end
 
+function FormatRange()
+  local old_func = vim.go.operatorfunc
+  _G.op_func_formatting = function()
+    local start = vim.api.nvim_buf_get_mark(0, '[')
+    local finish = vim.api.nvim_buf_get_mark(0, ']')
+    vim.lsp.buf.range_formatting({}, start, finish)
+    vim.go.operatorfunc = old_func
+    _G.op_func_formatting = nil
+  end
+  vim.go.operatorfunc = 'v:lua.op_func_formatting'
+  vim.api.nvim_feedkeys('g@', 'n', false)
+end
+
+
 -- Mappings.
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -27,7 +41,7 @@ map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 -- map("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 
 map("n", "ga", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
-map("n", "gf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+map("n", "gf", "<cmd>lua FormatRange()<CR>", opts)
 map("n", "gA", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 map("n", "gF", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
@@ -61,7 +75,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- LSP server configs
 -- Python
-nvim_lsp.pyls.setup{ on_attach = custom_attach, capabilities = capabilities }
+-- nvim_lsp.pyls.setup{ on_attach = custom_attach, capabilities = capabilities }
 
 -- C/C++
 nvim_lsp.clangd.setup{

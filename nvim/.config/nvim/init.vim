@@ -29,50 +29,48 @@ Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
 Plug 'Townk/vim-autoclose'                              " For auto-close feature
-" Plug 'jiangmiao/auto-pairs'
-" Plug 'luochen1990/rainbow'                              " Make braces colourful
 Plug 'godlygeek/tabular'                                " Text alignment
-Plug 'liuchengxu/vista.vim'                             " Tag bar
 Plug 'unblevable/quick-scope'                           " highlights for f,F
+Plug 'sindrets/diffview.nvim'                           " Git diff view
 
-" Plug 'Shougo/denite.nvim'                               " Fuzzy finder, buffer manager
+" Fuzzy finder, buffer manager
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'folke/todo-comments.nvim'
 
-" Snippets
+" Completion & Snippets
+Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'                                " Snippet manager
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'                     " Snippets defs
 
-
-" Document genration
-Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
-
-" Plugins for file explorer, linter and latex compiler.
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'vimwiki/vimwiki'
-Plug 'plasticboy/vim-markdown'                     " Markdown
-Plug 'lervag/vimtex'                               " LaTeX
-
-" Plugins for file explorer, linter and latex compiler.
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-
-" Language server plugins
+" Language server plugins LSP dependent plugins
 Plug 'neovim/nvim-lspconfig'    " NVim LSP client
 Plug 'nvim-lua/lsp-status.nvim' " generate status line components using LSP
 
-Plug 'hrsh7th/nvim-compe'
-Plug 'kosayoda/nvim-lightbulb'  " code-action
+Plug 'plasticboy/vim-markdown' " Markdown
+Plug 'lervag/vimtex'           " LaTeX
+" Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }   "Jupyter
 
+Plug 'liuchengxu/vista.vim'                        " Tag bar based on LSP
+Plug 'kosayoda/nvim-lightbulb'                     " code-action
+
+" Treesitter and treesitter dependent plugins
 Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
-" Plug 'nvim-treesitter/completion-treesitter'       " completion srcs
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects' " vim texobjects using treesitter
 Plug 'p00f/nvim-ts-rainbow'                        " Rainbow using treesitter
+" Plug 'nvim-treesitter/completion-treesitter'       " completion srcs
 
-" Debugge
-Plug 'mfussenegger/nvim-dap'
+" Statusline and tabline
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+
+" Other plugins
+Plug 'mfussenegger/nvim-dap' " Debugger DAP
+Plug 'vimwiki/vimwiki'       " Note taking
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() }, 'on': 'DogeGenerate' } " Document generation
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
@@ -80,9 +78,11 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'kyazdani42/nvim-web-devicons'
 
 " Color
-Plug 'chriskempson/base16-vim'
-Plug 'joshdick/onedark.vim'
-Plug 'RRethy/nvim-base16'
+" Plug 'chriskempson/base16-vim'
+" Plug 'joshdick/onedark.vim'
+" Plug 'RRethy/nvim-base16'
+" Plug 'marko-cerovac/material.nvim'
+Plug 'EdenEast/nightfox.nvim'
 
 call plug#end()
 
@@ -154,14 +154,15 @@ if (has("termguicolors"))
  set termguicolors            " Enables 24-bit RGB color in the terminal
 endif
 
+" For qquick scope
+autocmd ColorScheme * highlight QuickScopePrimary guifg='#ddf40e' gui=underline ctermfg=155 cterm=underline
+autocmd ColorScheme * highlight QuickScopeSecondary guifg='#6af40e' gui=underline ctermfg=81 cterm=underline
+
 "
 " Theme
-let base16colorspace=256        " enable if using base16-shell
-let g:hybrid_use_Xresources = 1
-" colorscheme onedark
-lua require('base16-colorscheme').setup('onedark')
-
-
+" let base16colorspace=256        " enable if using base16-shell
+" let g:hybrid_use_Xresources = 1
+colorscheme nightfox
 
 " Transpancey for text and buffer
 hi Normal ctermfg=250 ctermbg=none
@@ -183,7 +184,7 @@ set lazyredraw         " redraw only when we need to.
 set showmatch          " highlight matching [{()}]
 set spelllang=en       " spell
 set wildchar=<TAB>     " key for line completion
-set cc=80              " Right margin
+set cc=100             " Right margin
 set scrolloff=1        " Show atleast one line above/below the cursor
 set sidescrolloff=5    " Show at least one line left/right of the cursor.
 set matchpairs+=<:>    " Highlight matching pairs of brackets

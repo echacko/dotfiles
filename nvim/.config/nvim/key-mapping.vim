@@ -66,9 +66,19 @@ cnoremap ww w
 map <f9> :make<CR>
 
 " Quick write session with F2
-map <F2> :mksession! ~/.vim_session<cr>
+" map <F2> :mksession! ~/.vim_session<cr>
 " And load session with F3
-map <F3> :source ~/.vim_session<cr>
+" map <F3> :source ~/.vim_session<cr>
+map <F2> :call SaveOrLoadSession()<CR>
+function! SaveOrLoadSession()
+  if expand('%:t') == ''
+    echom "Sourcing session file."
+    source ~/.vim_session<CR>
+  else
+    mksession! ~/.vim_session<CR>
+    echom "Created session file."
+  endif
+endfunction
 
 " Command mode history
 cmap <M-p> <up>
