@@ -28,49 +28,55 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sensible'                               " Some default settings
 Plug 'tpope/vim-fugitive'                               " Git wrapper
 Plug 'tpope/vim-surround'                               " All about surroundings
-Plug 'Townk/vim-autoclose'                              " For auto-close feature
-Plug 'godlygeek/tabular'                                " Text alignment
+Plug 'tpope/vim-repeat'                                 " repeat plugin actions
+
+Plug 'windwp/nvim-autopairs'                            " autopair for Neovim
 Plug 'unblevable/quick-scope'                           " highlights for f,F
-Plug 'sindrets/diffview.nvim'                           " Git diff view
+Plug 'godlygeek/tabular', { 'on': 'Tabularize'}         " Text alignment
+
+Plug 'sindrets/diffview.nvim', {'on': 'DiffviewOpen'}   " Git diff view
 
 " Fuzzy finder, buffer manager
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'folke/todo-comments.nvim'
 
 " Completion & Snippets
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'                                " Snippet manager
-Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'                     " Snippets defs
 
 " Language server plugins LSP dependent plugins
-Plug 'neovim/nvim-lspconfig'    " NVim LSP client
-Plug 'nvim-lua/lsp-status.nvim' " generate status line components using LSP
+Plug 'neovim/nvim-lspconfig'     " NVim LSP client
+Plug 'kabouzeid/nvim-lspinstall' " Instal LSP servers locally
+Plug 'nvim-lua/lsp-status.nvim'  " generate status line components using LSP
+Plug 'glepnir/lspsaga.nvim'      " highly a performant UI.
 
 Plug 'plasticboy/vim-markdown' " Markdown
-Plug 'lervag/vimtex'           " LaTeX
-" Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }   "Jupyter
+Plug 'lervag/vimtex', { 'for': ['latex', 'tex'] }               " LaTeX
+Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }   "Jupyter
 
-Plug 'liuchengxu/vista.vim'                        " Tag bar based on LSP
-Plug 'kosayoda/nvim-lightbulb'                     " code-action
 
 " Treesitter and treesitter dependent plugins
 Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
 Plug 'nvim-treesitter/nvim-treesitter-textobjects' " vim texobjects using treesitter
 Plug 'p00f/nvim-ts-rainbow'                        " Rainbow using treesitter
-" Plug 'nvim-treesitter/completion-treesitter'       " completion srcs
 
 " Statusline and tabline
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 
 " Other plugins
-Plug 'mfussenegger/nvim-dap' " Debugger DAP
-Plug 'vimwiki/vimwiki'       " Note taking
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
-Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() }, 'on': 'DogeGenerate' } " Document generation
+Plug 'liuchengxu/vista.vim', { 'on': 'Vista'}           " Tag bar based on LSP
+Plug 'vimwiki/vimwiki'       " Note taking
+Plug 'kkoomen/vim-doge', { 'on': 'DogeGenerate' } " Document generation
+Plug 'mfussenegger/nvim-dap' " Debugger DAP
 
 " Icons
 Plug 'ryanoasis/vim-devicons'

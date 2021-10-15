@@ -1,5 +1,4 @@
 local telescope  = require('telescope')
-local themes = require("telescope.themes")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
 
@@ -9,10 +8,12 @@ local opt = {noremap = true, silent = true}
 -- mappings
 map("n", "<C-p>",      [[<Cmd>lua require('telescope.builtin').find_files()<CR>]], opt)
 map("n", "<Leader>ft", [[<Cmd>lua require('telescope.builtin').treesitter()<CR>]], opt)
+map("n", "<Leader>fb", [[<Cmd>lua require('telescope.builtin').buffers()<CR>]], opt)
 map("n", "<Leader>fG", [[<Cmd>lua require('telescope.builtin').grep_string()<CR>]], opt)
 map("n", "<Leader>fg", [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]], opt)
 map("n", "gr",         [[<Cmd>lua require('telescope.builtin').lsp_references()<CR>]], opt)
 
+-- Config
 telescope.setup{
   defaults = {
     vimgrep_arguments = {
@@ -58,13 +59,16 @@ telescope.setup{
     buffer_previewer_maker = previewers.buffer_previewer_maker
   },
 
-  -- Config for file picker
   pickers = {
     find_files = {
-      sort_lastused = true,
-      theme = "dropdown",
       previewer = false,
+      winblend = 10,
+      layout_config = {
+        width = 0.5,
+      },
     }
-  }
+  },
 }
 
+-- Load extensions
+require('telescope').load_extension('fzf')
