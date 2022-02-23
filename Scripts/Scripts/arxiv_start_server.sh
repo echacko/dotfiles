@@ -1,13 +1,12 @@
 
 #!/bin/bash
 
-# Change to arcix directory
-cd /media/Data/builds/arxiv-sanity-preserver/
+# change to arcix directory
+cd /media/Data/builds/arxiv-sanity-lite
 
-# Activate conda arxiv env
-source /home/echacko/anaconda3/bin/activate /media/Data/builds/arxiv-sanity-preserver/arxiv
-
-# Start mongo db
-sudo systemctl start mongodb.service
+# activate conda arxiv env
+source /home/echacko/anaconda3/bin/activate /media/Data/builds/arxiv-sanity-lite/venv
 
 python serve.py --prod --port 8080
+
+export FLASK_APP=serve.py; flask run --port 8080

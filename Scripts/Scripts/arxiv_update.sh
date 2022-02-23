@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Change to arcix directory
-cd /media/Data/builds/arxiv-sanity-preserver/
+# change to arcix directory
+cd /media/Data/builds/arxiv-sanity-lite
 
-# Activate conda arxiv env
-source /home/echacko/anaconda3/bin/activate /media/Data/builds/arxiv-sanity-preserver/arxiv
+# activate conda arxiv env
+source /home/echacko/anaconda3/bin/activate /media/Data/builds/arxiv-sanity-lite/venv
 
-# Now run the scripts in order
-python fetch_papers.py
-python download_pdfs.py
-python parse_pdf_to_text.py
-python thumb_pdf.py
-python analyze.py
-python buildsvm.py
-python make_cache.py
+python3 arxiv_daemon.py --num 2000
+
+if [ $? -eq 0 ]; then
+    echo "New papers detected! Running compute.py"
+    python3 compute.py
+else
+    echo "No new papers were added, skipping feature computation"
+fi
 
 exit 0
