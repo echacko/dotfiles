@@ -58,6 +58,9 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
     vim.api.nvim_command [[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
   end
+
+  -- aerial.nvim
+  require("aerial").on_attach(client, bufnr)
 end
 
 
@@ -109,43 +112,46 @@ local function make_config()
   }
 end
 
--- lsp-install
-local function setup_servers()
-  require'lspinstall'.setup()
+-- Setup the lua language servers
+local lsp_installer_servers = require'nvim-lsp-installer.servers'
 
-  -- get all installed servers
-  local servers = require'lspinstall'.installed_servers()
-  -- ... and add manually installed servers
-  if vim.fn.executable('clangd') == 1 then
-    table.insert(servers, "clangd")
+-- LSP Servers
+local servers = {
+  "clangd",
+  "pyright",
+  "sumneko_lua"
+}
+
+-- Install LSP servers
+for _, server in ipairs(servers) do
+  -- Generate the configuration for the server
+  local config = make_config()
+
+  -- language specific config
+  if server == "lua" then
+    config.settings = lua_settings
+  end
+  if server == "clangd" then
+    config.filetypes = {"c", "cpp"};
+    config.root_dir = require("lspconfig/util").root_pattern("compile_commands.json",
+                             "build/compile_commands.json",
+                             "compile_flags.txt",
+                             ".git");
+    config.cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"};
   end
 
-  for _, server in pairs(servers) do
-    local config = make_config()
-
-    -- language specific config
-    if server == "lua" then
-      config.settings = lua_settings
+  local server_available, requested_server = lsp_installer_servers.get_server(server)
+  if server_available then
+    requested_server:on_ready(
+      function ()
+        requested_server:setup(config)
+      end
+    )
+    if not requested_server:is_installed() then
+     -- Queue the server to be installed
+      requested_server:install()
     end
-    if server == "clangd" then
-      config.filetypes = {"c", "cpp"};
-      config.root_dir = require("lspconfig/util").root_pattern("compile_commands.json",
-                               "build/compile_commands.json",
-                               "compile_flags.txt",
-                               ".git");
-      config.cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"};
-    end
-
-    require'lspconfig'[server].setup(config)
   end
-end
-
-setup_servers()
-
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
-  setup_servers() -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
 
 -- Disbale virtual text

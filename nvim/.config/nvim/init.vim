@@ -42,25 +42,27 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'folke/todo-comments.nvim'
+Plug 'folke/trouble.nvim'
+
+" Copilot
+Plug 'github/copilot.vim'
 
 " Completion & Snippets
+Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'                                " Snippet manager
-Plug 'rafamadriz/friendly-snippets'                     " Snippets defs
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-copilot'
+Plug 'hrsh7th/vim-vsnip'   ", {'for': ['c', 'cpp', 'python']}            " Snippet manager
+Plug 'rafamadriz/friendly-snippets', {'for': ['c', 'cpp', 'python']} " Snippets defs
 
 " Language server plugins LSP dependent plugins
 Plug 'neovim/nvim-lspconfig'     " NVim LSP client
-Plug 'kabouzeid/nvim-lspinstall' " Instal LSP servers locally
+Plug 'williamboman/nvim-lsp-installer' " Instal LSP servers locally
 Plug 'nvim-lua/lsp-status.nvim'  " generate status line components using LSP
 Plug 'glepnir/lspsaga.nvim'      " highly a performant UI.
-
-Plug 'plasticboy/vim-markdown' " Markdown
-Plug 'lervag/vimtex', { 'for': ['latex', 'tex'] }               " LaTeX
-Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }   "Jupyter
-
+Plug 'onsails/lspkind-nvim'      " LSP kind
 
 " Treesitter and treesitter dependent plugins
 Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
@@ -68,15 +70,20 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects' " vim texobjects using treesi
 Plug 'p00f/nvim-ts-rainbow'                        " Rainbow using treesitter
 
 " Statusline and tabline
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'romgrk/barbar.nvim'
 
 " Other plugins
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
-Plug 'liuchengxu/vista.vim', { 'on': 'Vista'}           " Tag bar based on LSP
-Plug 'vimwiki/vimwiki'       " Note taking
-Plug 'kkoomen/vim-doge', { 'on': 'DogeGenerate' } " Document generation
+Plug 'stevearc/aerial.nvim'                             " code outline window
+
+Plug 'plasticboy/vim-markdown'                    " Markdown
+Plug 'lervag/vimtex', { 'for': ['latex', 'tex'] } " LaTeX
+Plug 'vimwiki/vimwiki'                            " Note taking
+
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() }, 'on': 'DogeGenerate' } " Document generation
 Plug 'mfussenegger/nvim-dap' " Debugger DAP
+" Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }   "Jupyter
 
 " Icons
 Plug 'ryanoasis/vim-devicons'

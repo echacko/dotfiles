@@ -5,17 +5,6 @@ else
   let g:python3_host_prog='/usr/bin/python'
 endif
 
-" Lightline
-source ~/.config/nvim/lightline.vim
-" source ~/.config/nvim/icon.vim
-" source ~/.config/nvim/statusline.vim
-
-" Denite
-" source ~/.config/nvim/denite.vim
-
-" CoC-Nvim
-" source ~/.config/nvim/nvim-lsp.vim
-
 " NERDTree
 " Open NerdTree file browser
 nnoremap <leader>e :NERDTreeToggle<CR>
@@ -53,16 +42,6 @@ let g:vimtex_compiler_tectonic = {
 let g:vimwiki_list = [{'path': '~/work/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
-" Vista
-" Toggle tagbar
-nnoremap <leader>tt :Vista!!<CR>
-
-let g:vista_default_executive = 'nvim_lsp'      " Specify the LSP
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]      " Nice fonts
-let g:vista#renderer#enable_icon = 1            " Show icons
-let g:vista_disable_statusline = 1              " disable statusline
-
-
 " Tabular
 " Prepare tabularize
 nmap <leader>ta :'<,'> Tabularize /
@@ -93,6 +72,10 @@ nmap        s   <Plug>(vsnip-select-text)
 xmap        s   <Plug>(vsnip-select-text)
 nmap        S   <Plug>(vsnip-cut-text)
 xmap        S   <Plug>(vsnip-cut-text)
+
+" Github co-pilot
+nmap <leader>ce :Copilot enable<CR>
+nmap <leader>cd :Copilot disable<CR>
 
 " Magam-nvim
 " nnoremap <silent><expr> <LocalLeader>r  :MagmaEvaluateOperator<CR>
