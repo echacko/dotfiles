@@ -4,7 +4,7 @@
 cd /media/Data/builds/arxiv-sanity-lite
 
 # activate conda arxiv env
-source /home/echacko/anaconda3/bin/activate /media/Data/builds/arxiv-sanity-lite/venv
+source /home/ebin/anaconda3/bin/activate /media/Data/builds/arxiv-sanity-lite/venv
 
 python3 arxiv_daemon.py --num 2000
 
