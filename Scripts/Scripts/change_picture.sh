@@ -8,7 +8,7 @@
 export DISPLAY=:0
 
 # Image directory
-PIC_DIR=/home/echacko/Pictures/Wallpapers
+PIC_DIR=/home/ebin/Pictures/Wallpapers
 
 # Now set the wallpaper
 image_file=$(ls -1 $PIC_DIR/ | sort -R | tail -1)
