@@ -8,12 +8,12 @@
 ; secondary = #e60053
 ; alert = #bd2c40
 
-background = ${xrdb:background}
-background-alt = ${xrdb:color0}
-foreground = ${xrdb:foreground}
-foreground-alt = ${xrdb:color7}
-underline = ${xrdb:color7}
-primary = ${xrdb:color6}
-secondary = ${xrdb:color13}
-alert = ${xrdb:color9}
+background     = #0e1713
+background-alt = #131f1a
+foreground     = #b3bf96
+foreground-alt = #b1ba8d
+underline      = #b1ba8d
+primary        = #35645e
+secondary      = #3a4b57
+alert          = #938050
 desktop = #402a4e
