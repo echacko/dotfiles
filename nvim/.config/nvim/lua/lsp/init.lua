@@ -38,23 +38,23 @@ local on_attach = function(client, bufnr)
       map(bufnr, 'n', 'gR',  "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
   end
 
-  map(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  map(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  map(bufnr, 'n', '[D', '<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', opts)
-  map(bufnr, 'n', ']D', '<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', opts)
+  map(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  map(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  map(bufnr, 'n', '[D', '<cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>', opts)
+  map(bufnr, 'n', ']D', '<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>', opts)
   map(bufnr, 'n', '<leader>lc', '<cmd>lua vim.lsp.diagnostic.clear(0)<CR>', opts)
   map(bufnr, 'n', '<leader>lQ', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   map(bufnr, 'n', '<leader>ll', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities then
     map(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     map(bufnr, "n", "gf", "<cmd>lua require'lsp.handlers'.format_range()<CR>", opts)
   end
-  if client.resolved_capabilities.document_range_formatting then
+  if client.server_capabilities then
     map(bufnr, 'v', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client.server_capabilities.code_lens then
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
     vim.api.nvim_command [[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
   end
