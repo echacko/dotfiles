@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/echacko/.oh-my-zsh"
+export ZSH="/home/ebin/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -68,9 +68,16 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump tmux fzf zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git tmux fzf zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init --cmd j zsh)"
+else
+  echo '[oh-my-zsh] zoxide not found, please install it from https://github.com/ajeetdsouza/zoxide'
+fi
 
 # User configuration
 
@@ -121,6 +128,9 @@ if [ -x /usr/bin/lesspipe ]; then
     eval "$(lesspipe)"
 fi
 
+# History ignore
+HISTORY_IGNORE="(ls|ll|pwd|exit|cd ..|clear)"
+
 # For calculation in terminal, use python
 function = 
 {
@@ -133,23 +143,22 @@ function =
 # For a full list of active aliases, run `alias`.
 #
 alias vi="nvim"
-alias v="nvim --servername=VIM"
 alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
 alias ssh="ssh -Y"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
-alias sudo='sudo '
 alias h='history'
 alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
-alias xo='~/Scripts/xo.sh '
-alias a="source ~/anaconda3/bin/activate"
+alias xo='~/dotfiles/Scripts/Scripts/xo.sh '
+alias a="export XLA_FLAGS=--xla_gpu_cuda_data_dir=/opt/cuda && source ~/anaconda3/bin/activate"
 alias activate_conda="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
-alias extract='~/Scripts/extract.sh'
+alias extract='~/dotfiles/Scripts/Scripts/extract.sh'
 alias convert-to-pdf="libreoffice --headless --convert-to pdf "
 alias calc="="
 alias cat=bat
+alias ran1_download="python ~/dotfiles/Scripts/Scripts/ran1_download.py "
