@@ -9,7 +9,7 @@
 font pango:monospace 8
 
 # Set default terminal
-set $terminal alacritty
+set $terminal i3-sensible-terminal
 
 # Set Ctrl as $mod1
 set $mod1 Control
@@ -43,7 +43,8 @@ bindsym $mod+b exec firefox
 bindsym $mod+q kill
 
 # Start rofi (dmenu replacement)
-bindsym $mod+d exec exec  rofi -show run -lines 5
+# bindsym $mod+d exec exec  rofi -show run -lines 5
+bindsym $mod+d exec "rofi -modi window,drun,run,ssh -show drun -sidebar-mode -terminal kitty -show-icons"
 
 # Toggle touchpad
 bindsym $mod+space exec ~/.config/i3/toggle_touchpad.sh
@@ -139,7 +140,7 @@ bindsym Print exec "scrot -z ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png; 
 ###
 ## Define monitors
 set $primary eDP-1
-set $seconday DP-1
+set $secondary HDMI1
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -296,6 +297,7 @@ for_window [class="(?i)feh"] floating enable, move absolute center
 for_window [class="(?i)File-roller"] floating enable, resize set 480 480
 for_window [class="(?i)Spotify"] floating enable, move absolute center
 for_window [class="(?i)Pavucontrol"] floating enable, move absolute center
+for_window [title='^Figure'] floating enable
 
 # Assign Firefox to workspace 2
 assign [class="(?i)Firefox"] $ws2
@@ -320,6 +322,9 @@ for_window [title="Microsoft Teams Notification"] floating enable
 
 # Autostarts
 #
+# Dual monitor setup
+exec_always mons -e right
+
 exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 
 # Wallpaper Config
@@ -342,11 +347,10 @@ exec_always picom --config $HOME/.config/picom/picom.conf
 exec_always unclutter
 
 # Start script to prevent screenlock while in fullscreen
-exec --no-startup-id $HOME/Scripts/xautolockstop.sh
+exec --no-startup-id $HOME/dotfiles/Scripts/Scripts/xautolockstop.sh
 
 # Start script for per-workspace-layout
 exec_always ~/.config/i3/per-workspace-layout.pl
-
 ###
 # Colours
 ###
