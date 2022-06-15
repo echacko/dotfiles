@@ -19,7 +19,7 @@
 
 [core]
 	editor = nvim
-	excludesfile = /home/echacko/.gitignore_global
+	excludesfile = /home/ebin/.gitignore_global
 	autocrlf = input
 
 [github]
@@ -31,7 +31,7 @@
 	prompt = false
 
 [merge]
-	tool = meld
+	tool = kdiff3
 [mergetool]
 	keepBackup = false
 
@@ -53,4 +53,4 @@
 	l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph
 	d = difftool
 [init]
-	defaultBranch = dev
+	defaultBranch = main

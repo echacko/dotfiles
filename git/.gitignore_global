@@ -37,3 +37,7 @@ compile_commands.json
 .ccl-cache//
 __pycache__/*
 .ipynb_checkpoints/*
+.cache/*
+.vscode/*
+.cache/
+.vscode/
