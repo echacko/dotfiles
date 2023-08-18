@@ -129,7 +129,7 @@ bindsym Mod1+$mod1+l exec betterlockscreen -l --off 5 -- --greeter-text="GGMU"
 #bindsym Mod1+Shift+Down exec amixer -c 0 -- sset Master playback 5%-
 bindsym $mod+Shift+Up exec "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume 0 +5%"
 bindsym $mod+Shift+Down exec "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume 0 -5%"
-bindsym $mod+m exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+# bindsym $mod+m exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 bindsym XF86AudioRaiseVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume 0 +5%"
 bindsym XF86AudioLowerVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume 0 -5%"
 bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
@@ -184,6 +184,9 @@ workspace_auto_back_and_forth yes
 # bindsym $mod+b workspace back_and_forth
 # bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
+# Move to multiple monitors
+bindsym $mod+m move workspace to output right
+bindsym $mod+n move workspace to output left
 ###
 # Exit and i3 related keybindings
 ###
@@ -322,8 +325,10 @@ for_window [title="Microsoft Teams Notification"] floating enable
 
 # Autostarts
 #
-# Dual monitor setup
-exec_always mons -e right
+# Start compton
+exec_always picom --config $HOME/.config/picom/picom.conf
+
+# exec --no-startup-id "xrand --output $secondary --auto --right-of $primary"
 
 exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 
@@ -338,19 +343,20 @@ exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i
 exec --no-startup-id nm-applet
 
 # Low battery popup
-exec --no-startup-id /usr/bin/i3-battery-popup -L 20 -n
+# exec --no-startup-id /usr/bin/i3-battery-popup -L 20 -n
 
-# Start compton
-exec_always picom --config $HOME/.config/picom/picom.conf
 
 # Start unclutter
 exec_always unclutter
 
+# Dual monitor setup
+exec "mons -e right"
+
 # Start script to prevent screenlock while in fullscreen
-exec --no-startup-id $HOME/dotfiles/Scripts/Scripts/xautolockstop.sh
+# exec --no-startup-id $HOME/dotfiles/Scripts/Scripts/xautolockstop.sh
 
 # Start script for per-workspace-layout
-exec_always ~/.config/i3/per-workspace-layout.pl
+# exec_always ~/.config/i3/per-workspace-layout.pl
 ###
 # Colours
 ###

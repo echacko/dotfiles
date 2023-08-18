@@ -162,3 +162,4 @@ alias convert-to-pdf="libreoffice --headless --convert-to pdf "
 alias calc="="
 alias cat=bat
 alias ran1_download="python ~/dotfiles/Scripts/Scripts/ran1_download.py "
+alias convert-and-save="bash ~/dotfiles/Scripts/Scripts/convert_and_save.sh "
