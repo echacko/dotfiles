@@ -1,49 +1,74 @@
 #! /usr/bin/env python3
 
+import argparse
 import sys
-import urllib3
+import urllib.request
+from tqdm import tqdm
 
-ran1_base_url = "https://www.3gpp.org/ftp/TSG_RAN/WG1_RL1/"
+def download_file(meeting_id, doc_num):
+    url = f"https://www.3gpp.org/ftp/TSG_RAN/WG1_RL1/TSGR1_{meeting_id}/Docs/{doc_num}.zip"
+    filename = f"{doc_num}.zip"
 
-# Get file name and meeting
-try:
-    meeting_id = sys.argv[1]
-    tdoc_id = sys.argv[2]
-except IndexError:
-    print("\nERROR: Please specify Meeting ID and TDoc number.")
-    print("Usage python ran1_download.py <meeting_id> <tdoc_number>")
+    try:
+        with tqdm(unit='B', unit_scale=True, unit_divisor=1024, miniters=1, desc=f"Downloading {filename}") as t:
+            urllib.request.urlretrieve(url, filename, reporthook=download_progress_hook(t))
+        print("File downloaded successfully!")
+    except Exception as e:
+        print(f"URL: {url} is invalid: {e}.")
+        url = f"https://www.3gpp.org/ftp/TSG_RAN/WG1_RL1/TSGR1_{meeting_id}/Inbox/{doc_num}.zip"
+        print(f"Trying Inbox link: {url}")
+        try:
+            with tqdm(unit='B', unit_scale=True, unit_divisor=1024, miniters=1, desc=f"Downloading {filename}") as t:
+                urllib.request.urlretrieve(url, filename, reporthook=download_progress_hook(t))
+            print("File downloaded successfully!")
+        except Exception as e:
+            print(f"URL: {url} is invalid: {e}.")
+            print("Please check the meeting ID and TDoc number.")
+            usage()
+            exit(255)
 
-http = urllib3.PoolManager()
+def download_progress_hook(t):
+    def update_to(b=1, bsize=1, tsize=None):
+        if tsize is not None:
+            t.total = tsize
+        t.update(b * bsize - t.n)
+    return update_to
 
-ran1_meeting_url = ran1_base_url + "TSGR1_" + meeting_id
-ran1_tdoc_url = ran1_meeting_url + "/Docs/" + tdoc_id + ".zip"
+def usage():
+    print("Usage: python ran1_download.py <meeting_id> <tdoc_number>")
+    print("Usage: python ran1_download.py --bulk <meeting_id> <file_name>")
+    exit(255)
 
-response = http.request('GET', ran1_tdoc_url, preload_content=False)
+# Main
+if __name__ == "__main__":
+    # Get file name and meeting
+    parser = argparse.ArgumentParser(description='Download documents from 3GPP.')
+    parser.add_argument('meeting_id', type=str, help='Meeting ID')
+    parser.add_argument('--bulk', metavar=('FILE'), nargs=1, help='Download documents in bulk')
+    parser.add_argument('tdoc_id', type=str, nargs='?', help='Document number')
 
-if (response.status != 200):
-    print(f"Invalid URL :{ran1_tdoc_url}")
+    args = parser.parse_args()
+    meeting_id = args.meeting_id
 
-    # Search in Inbox folder if tdco is not found in docs
-    ran1_tdoc_url = ran1_meeting_url + "/Inbox/" + tdoc_id + ".zip"
-    print("Trying Inbox link")
-    response = http.request('GET', ran1_tdoc_url, preload_content=False)
-    if (response.status != 200):
-        print(f"Invalid URL :{ran1_tdoc_url}")
+    if args.bulk:
+        file_path = args.bulk[0]
+        print(f"Downloading documents from file '{file_path}'")
 
-        exit(255)
+        try:
+            with open(file_path, 'r') as file:
+                tdoc_ids = file.read().splitlines()
+        except FileNotFoundError:
+            print(f"Error: File '{file_path}' not found.")
+            sys.exit(1)
 
-filename = tdoc_id + ".zip"
-file_size = int(response.headers["Content-Length"])
-chunk_size = 8192
-print(f"Downloading {filename} : {file_size / 1024:.2f}KB")
+        for tdoc_id in tdoc_ids:
+            download_file(meeting_id, tdoc_id)
+    else:
+        if not args.tdoc_id:
+            usage()
 
-with open(filename, 'wb') as out:
-    while True:
-        data = response.read(chunk_size)
-        if not data:
-            break
-        out.write(data)
+        tdoc_id = args.tdoc_id
+        download_file(meeting_id, tdoc_id)
 
-response.release_conn()
-
-# Fin
+    exit(0)
+    # Fin
