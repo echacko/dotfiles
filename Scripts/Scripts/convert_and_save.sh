@@ -47,7 +47,13 @@ libreoffice --headless --convert-to pdf "$selected_docx"
 mv "$pdf_file" "$output_directory"
 
 # Clean up extracted DOCX file
-rm -f "$output_directory/$selected_docx"
+rm -f "$selected_docx"
+
+# Sometimes the docx file is an subdirectory of the zip file
+# so we need to remove the subdirectory
+if [ -d "${input_zip_file%.zip}" ]; then
+    rm -r "${input_zip_file%.zip}"
+fi
 
 echo "Conversion complete: $pdf_file saved in $output_directory"
 
