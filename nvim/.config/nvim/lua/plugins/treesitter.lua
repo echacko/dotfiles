@@ -57,8 +57,8 @@ nvim_treesitter.setup {
     lsp_interop = {
       enable = true,
       peek_definition_code = {
-        ["df"] = "@function.outer",
-        ["dF"] = "@class.outer",
+        ["Kf"] = "@function.outer",
+        ["KF"] = "@class.outer",
       },
     },
   },

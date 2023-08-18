@@ -47,7 +47,7 @@ local on_attach = function(client, bufnr)
   map(bufnr, 'n', '<leader>ll', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 
   if client.server_capabilities then
-    map(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    map(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.format{async = true}<CR>', opts)
     map(bufnr, "n", "gf", "<cmd>lua require'lsp.handlers'.format_range()<CR>", opts)
   end
   if client.server_capabilities then
@@ -60,7 +60,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- aerial.nvim
-  require("aerial").on_attach(client, bufnr)
+  -- require("aerial").on_attach(client, bufnr)
 end
 
 
@@ -102,7 +102,7 @@ local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   if pcall(require, 'cmp_nvim_lsp') then
-    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+    capabilities = require('cmp_nvim_lsp').default_capabilities()
   end
   return {
     -- enable snippet support
@@ -119,7 +119,7 @@ local lsp_installer_servers = require'nvim-lsp-installer.servers'
 local servers = {
   "clangd",
   "pyright",
-  "sumneko_lua"
+  -- "sumneko_lua"
 }
 
 -- Install LSP servers
