@@ -50,9 +50,6 @@ nnoremap <leader>vr :source $HOME/.config/nvim/init.vim <CR>
 " Search and delete for trailing spaces and spaces before a tab
 nnoremap <leader>dw :%s/\s\+$\\| \+\ze\t//gc<CR>
 
-" Togle fold
-nnoremap <space> za
-
 " Search command history
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
@@ -100,3 +97,10 @@ nnoremap <leader>p "+p
 " Insert date using F5
 :nnoremap <F6> "=strftime("%d/%m/%y %H:%M:%S ")<CR>P
 :inoremap <F6> <C-R>=strftime("%d/%m/%y %H:%M:%S ")<CR>
+
+" Tagtree
+nnoremap <leader>tt :SymbolsOutline<CR>
+
+" Ident lines
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv<

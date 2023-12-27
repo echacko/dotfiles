@@ -1,158 +1,22 @@
-if not pcall(require, "lspconfig") then
+local status_ok, lspconfig =  pcall(require, "lspconfig")
+if not status_ok then
+  vim.notify("Couldn't load LSP Config" .. lspconfig, "error")
   return
 end
 
 -- Set log level if needed
 -- vim.lsp.set_log_level("debug")
 
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  if client.config.flags then
-    client.config.flags.allow_incremental_sync = true
-    client.config.flags.debounce_text_changes  = 150
-  end
-
-  local map  =   vim.api.nvim_buf_set_keymap
-  local opts = { noremap=true, silent=true }
-
-  map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  -- map(bufnr, 'n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts) -- lspsaga
-  -- map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts) -- telescope
-  map(bufnr, 'n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  map(bufnr, 'v', 'ga', ':<C-U>lua vim.lsp.buf.range_code_action()<CR>', opts)
-  map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  map(bufnr, 'n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  map(bufnr, 'n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  map(bufnr, 'n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  map(bufnr, 'n', '<leader>K',  '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  map(bufnr, 'n', '<leader>k', '<cmd>lua require("lsp.handlers").peek_definition()<CR>', opts)
-
-  -- https://github.com/glepnir/lspsaga.nvim
-  if pcall(require, 'lspsaga') then
-      map(bufnr, 'n', 'K',  "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
-      map(bufnr, 'n', '<leader>K',  "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
-      map(bufnr, 'n', 'ga',  "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
-      map(bufnr, 'v', 'ga',  ":<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
-      map(bufnr, 'n', 'gR',  "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
-  end
-
-  map(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  map(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  map(bufnr, 'n', '[D', '<cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>', opts)
-  map(bufnr, 'n', ']D', '<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>', opts)
-  map(bufnr, 'n', '<leader>lc', '<cmd>lua vim.lsp.diagnostic.clear(0)<CR>', opts)
-  map(bufnr, 'n', '<leader>lQ', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  map(bufnr, 'n', '<leader>ll', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-
-  if client.server_capabilities then
-    map(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.format{async = true}<CR>', opts)
-    map(bufnr, "n", "gf", "<cmd>lua require'lsp.handlers'.format_range()<CR>", opts)
-  end
-  if client.server_capabilities then
-    map(bufnr, 'v', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  end
-
-  if client.server_capabilities.code_lens then
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>lL", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
-    vim.api.nvim_command [[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
-  end
-
-  -- aerial.nvim
-  -- require("aerial").on_attach(client, bufnr)
-end
-
-
--- Configure lua language server for neovim development
-local lua_settings = {
-  Lua = {
-    runtime = {
-      -- LuaJIT in the case of Neovim
-      version = 'LuaJIT',
-      path = vim.split(package.path, ';'),
-    },
-    diagnostics = {
-      -- Get the language server to recognize the `vim` global
-      globals = {
-        'vim',
-        'root',         -- awesomeWM
-        'awesome',      -- awesomeWM
-        'screen',       -- awesomeWM
-        'client',       -- awesomeWM
-        'clientkeys',   -- awesomeWM
-        'clientbuttons',-- awesomeWM
-      },
-    },
-    workspace = {
-      -- Make the server aware of Neovim runtime files
-      library = {
-        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-      },
-    },
-    telemetry = {
-      enable = false,
-    },
-  }
-}
-
--- config that activates keymaps and enables snippet support
-local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  if pcall(require, 'cmp_nvim_lsp') then
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-  end
-  return {
-    -- enable snippet support
-    capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
-  }
-end
-
--- Setup the lua language servers
-local lsp_installer_servers = require'nvim-lsp-installer.servers'
-
--- LSP Servers
-local servers = {
-  "clangd",
-  "pyright",
-  -- "sumneko_lua"
-}
-
--- Install LSP servers
-for _, server in ipairs(servers) do
-  -- Generate the configuration for the server
-  local config = make_config()
-
-  -- language specific config
-  if server == "lua" then
-    config.settings = lua_settings
-  end
-  if server == "clangd" then
-    config.filetypes = {"c", "cpp"};
-    config.root_dir = require("lspconfig/util").root_pattern("compile_commands.json",
-                             "build/compile_commands.json",
-                             "compile_flags.txt",
-                             ".git");
-    config.cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"};
-  end
-
-  local server_available, requested_server = lsp_installer_servers.get_server(server)
-  if server_available then
-    requested_server:on_ready(
-      function ()
-        requested_server:setup(config)
-      end
-    )
-    if not requested_server:is_installed() then
-     -- Queue the server to be installed
-      requested_server:install()
-    end
-  end
-end
+lspconfig.lua_ls.setup{}
+lspconfig.pyright.setup{}
+lspconfig.clangd.setup({
+  filetypes = {"c", "cpp"};
+  root_dir = require("lspconfig/util").root_pattern("compile_commands.json",
+                           "build/compile_commands.json",
+                           "compile_flags.txt",
+                           ".git");
+  cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"};
+})
 
 -- Disbale virtual text
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -165,3 +29,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- Setup icons & handler helper functions
 require('lsp.icons')
 require('lsp.handlers')
+require('lsp.keymaps')
+require('lsp.mason')

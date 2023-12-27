@@ -43,12 +43,26 @@ def usage():
 if __name__ == "__main__":
     # Get file name and meeting
     parser = argparse.ArgumentParser(description='Download documents from 3GPP.')
+    parser.add_argument('--wg', metavar=('WG'), nargs=1, help='Working Group'
+                        ' (default: RAN1)', default='RAN1')
     parser.add_argument('meeting_id', type=str, help='Meeting ID')
     parser.add_argument('--bulk', metavar=('FILE'), nargs=1, help='Download documents in bulk')
     parser.add_argument('tdoc_id', type=str, nargs='?', help='Document number')
 
     args = parser.parse_args()
     meeting_id = args.meeting_id
+    wg = args.wg[0]
+
+    if wg == 'RAN1':
+        url_format = "https://www.3gpp.org/ftp/TSG_RAN/WG1_RL1/TSGR1_{meeting_id}/Docs/{doc_num}.zip"
+    elif wg == 'RAN':
+        url_format = "https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_{meeting_id}/Docs/{doc_num}.zip"
+    else:
+        print(f"Working group '{wg}' not supported.")
+        exit(255)
+
+    print("Downloading from url: ", url_format.format(meeting_id=meeting_id, doc_num="{doc_num}"))
+    exit(0)
 
     if args.bulk:
         file_path = args.bulk[0]

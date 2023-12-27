@@ -50,19 +50,21 @@ Plug 'github/copilot.vim'
 " Completion & Snippets
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-copilot'
-Plug 'hrsh7th/vim-vsnip'   ", {'for': ['c', 'cpp', 'python']}            " Snippet manager
-Plug 'rafamadriz/friendly-snippets', {'for': ['c', 'cpp', 'python']} " Snippets defs
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-cmdline'
+" Plug 'hrsh7th/cmp-copilot'
+" Plug 'hrsh7th/vim-vsnip'   ", {'for': ['c', 'cpp', 'python']}            " Snippet manager
+" Plug 'rafamadriz/friendly-snippets', {'for': ['c', 'cpp', 'python']} " Snippets defs
 
 " Language server plugins LSP dependent plugins
 Plug 'neovim/nvim-lspconfig'     " NVim LSP client
-Plug 'williamboman/nvim-lsp-installer' " Instal LSP servers locally
+Plug 'williamboman/mason.nvim' " Instal LSP servers locally
+Plug 'williamboman/mason-lspconfig.nvim',
 Plug 'nvim-lua/lsp-status.nvim'  " generate status line components using LSP
-Plug 'glepnir/lspsaga.nvim'      " highly a performant UI.
-Plug 'onsails/lspkind-nvim'      " LSP kind
+Plug 'simrat39/symbols-outline.nvim' " Symbols outline
+" Plug 'glepnir/lspsaga.nvim'      " highly a performant UI.
+" Plug 'onsails/lspkind-nvim'      " LSP kind
 
 " Treesitter and treesitter dependent plugins
 Plug 'nvim-treesitter/nvim-treesitter'             " nvim treesiter
@@ -75,7 +77,7 @@ Plug 'romgrk/barbar.nvim'
 
 " Other plugins
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File explorer
-Plug 'stevearc/aerial.nvim'                             " code outline window
+" Plug 'stevearc/aerial.nvim'                             " code outline window
 
 Plug 'plasticboy/vim-markdown'                    " Markdown
 Plug 'lervag/vimtex', { 'for': ['latex', 'tex'] } " LaTeX

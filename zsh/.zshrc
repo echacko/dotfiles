@@ -163,3 +163,4 @@ alias calc="="
 alias cat=bat
 alias ran1_download="python ~/dotfiles/Scripts/Scripts/ran1_download.py "
 alias convert-and-save="bash ~/dotfiles/Scripts/Scripts/convert_and_save.sh "
+alias ssh-iitb-tunnel="ssh -C -L 8080:localhost:8080 echacko@www.ee.iitb.ac.in"
