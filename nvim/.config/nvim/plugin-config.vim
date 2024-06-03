@@ -2,7 +2,7 @@
 if has('nvim') && !empty($CONDA_PREFIX)
   let g:python3_host_prog = $CONDA_PREFIX . '/bin/python'
 else
-  let g:python3_host_prog='/usr/bin/python'
+  let g:python3_host_prog='/usr/bin/python3'
 endif
 
 " NERDTree

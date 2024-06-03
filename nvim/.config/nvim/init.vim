@@ -40,7 +40,7 @@ Plug 'sindrets/diffview.nvim', {'on': 'DiffviewOpen'}   " Git diff view
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'folke/todo-comments.nvim'
 Plug 'folke/trouble.nvim'
 
