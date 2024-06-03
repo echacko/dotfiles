@@ -1,14 +1,18 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Profiling 
+# zmodload zsh/zprof
+
 # Path to your oh-my-zsh installation.
-export ZSH="/home/ebin/.oh-my-zsh"
+export ZSH="/Users/ebin/.oh-my-zsh/"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="spaceship"
+SPACESHIP_ASYNC_SHOW_COUNT=true
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,10 +72,16 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux fzf zsh-autosuggestions)
+plugins=(git tmux fzf fast-syntax-highlighting zsh-autosuggestions)
+
+# Load homebrew, so that the PATH has brew kegs.
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  echo '[oh-my-zsh] homebrew not found, please install it from https://brew.sh'
+fi
 
 source $ZSH/oh-my-zsh.sh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 if (( $+commands[zoxide] )); then
   eval "$(zoxide init --cmd j zsh)"
@@ -80,6 +90,13 @@ else
 fi
 
 # User configuration
+
+# FZF
+if [ -x /opt/homebrew/bin/fzf ]; then
+  source <(fzf --zsh)
+else
+  echo '[oh-my-zsh] fzf not found, please install it from https://github.com/junegunn/fzz'
+fi
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
@@ -109,7 +126,7 @@ fi
 
 # Use lsd if installed insted of lsd
 export LS_OPTIONS='--color=auto'
-if [ -x /usr/bin/lsd ]; then
+if [ -x /usr/bin/lsd ] || [ -x /opt/homebrew/bin/lsd ]; then
   alias l='lsd $LS_OPTIONS'
   alias ll='lsd $LS_OPTIONS -lrt -hF'
   alias ls='lsd $LS_OPTIONS -hF'
@@ -134,7 +151,10 @@ HISTORY_IGNORE="(ls|ll|pwd|exit|cd ..|clear)"
 # For calculation in terminal, use python
 function = 
 {
-  python <<< "print($@)"
+  python <<EOF
+from math import *
+print(eval("$*"))
+EOF
 }
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -164,3 +184,6 @@ alias cat=bat
 alias ran1_download="python ~/dotfiles/Scripts/Scripts/ran1_download.py "
 alias convert-and-save="bash ~/dotfiles/Scripts/Scripts/convert_and_save.sh "
 alias ssh-iitb-tunnel="ssh -C -L 8080:localhost:8080 echacko@www.ee.iitb.ac.in"
+
+# Profiling 
+# zprof
