@@ -326,6 +326,9 @@ for_window [title="Microsoft Teams Notification"] floating enable
 # Autostarts
 #
 # Start compton
+# Dual monitor setup
+exec "mons -e right"
+
 exec_always picom --config $HOME/.config/picom/picom.conf
 
 # exec --no-startup-id "xrand --output $secondary --auto --right-of $primary"
@@ -337,20 +340,19 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id $HOME/.fehbg
 
 # Start autolock
-exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "betterlockscreen -l --off 5" -detectsleep
+exec --no-startup-id /usr/bin/xautolock -secure -notify 5 -notifier "~/.config/i3/dpms-notify.sh"  -time 5 -locker "  betterlockscreen -l --off 5" -detectsleep
+
+# Start synology drive
+exec --no-startup-id /usr/bin/synology-drive
 
 # Show the nm-applet
 exec --no-startup-id nm-applet
 
 # Low battery popup
-# exec --no-startup-id /usr/bin/i3-battery-popup -L 20 -n
-
+exec --no-startup-id /usr/bin/i3-battery-popup -L 20 -n
 
 # Start unclutter
 exec_always unclutter
-
-# Dual monitor setup
-exec "mons -e right"
 
 # Start script to prevent screenlock while in fullscreen
 # exec --no-startup-id $HOME/dotfiles/Scripts/Scripts/xautolockstop.sh
