@@ -74,6 +74,11 @@ ENABLE_CORRECTION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git tmux fzf fast-syntax-highlighting zsh-autosuggestions)
 
+
+# Tmux integration for iTerm2
+# Set '-CC' option for iTerm2 tmux integration
+ZSH_TMUX_ITERM2=1
+
 # Load homebrew, so that the PATH has brew kegs.
 if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
