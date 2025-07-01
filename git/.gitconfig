@@ -1,6 +1,6 @@
 [user]
-	email = echacko@cewit.org.in
-	name = echacko
+	name = Ebin Chacko
+	email = ebin.chacko.ext@nokia.com
 
 [color]
 	ui = true
@@ -16,41 +16,36 @@
 	added = green bold
 	changed = red bold
 	untracked = red bold
-
+[push]
+	default = simple
+	recurseSubmodules = on-demand
 [core]
-	editor = nvim
-	excludesfile = /home/ebin/.gitignore_global
+	pager = /usr/bin/less -iMS
+	editor = /usr/bin/vim
+	excludesfile = ~/.gitignore_global
 	autocrlf = input
-
-[github]
-	user = echacko
-
+   sshCommand = /usr/bin/ssh -o LogLevel=QUIET
+   preloadIndex = true
+   untrackedCache = true
+   fsmonitor = true
+[pull]
+	rebase = true
+   recurseSubmodules = true
+[submodule]
+	recurse = true
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
-
-[merge]
-	tool = kdiff3
-[mergetool]
-	keepBackup = false
-
-[credential]
-	helper = cache --timeout=3600
-
-[format]
-	pretty = oneline
-
-[push]
-	default = matching
-[pull]
-  ff = only
-
 [alias]
-	st = status -sb
+	st = status -sbuno --ignore-submodules
 	ci = commit -v
 	last = log -1 HEAD
-  l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph --date=format:'%Y-%m-%d %H:%M:%S'
-	d = difftool
+   l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph --date=format:'%Y-%m-%d %H:%M:%S'
+   d = diff -p
+	dt = difftool
+	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
+[credential]
+	helper = store
 [init]
 	defaultBranch = main
