@@ -14,7 +14,6 @@ return {
       'cpp',
       'diff',
       'html',
-      'latex',
       'lua',
       'luadoc',
       'markdown',
@@ -38,9 +37,6 @@ return {
         scope_incremental = "grc",
         node_decremental = "grm",
       },
-    },
-    indent = {
-      enable = true,
     },
     textobjects = {
       -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
@@ -82,3 +78,4 @@ return {
       },
     },
   }
+}

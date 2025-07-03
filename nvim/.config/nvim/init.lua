@@ -15,8 +15,7 @@ vim.g.loaded_gzip = 1
 vim.g.loaded_tarPlugin = 1
 
 vim.o.updatetime = 250  -- Decrease update time
-vim.o.timeoutlen = 300  -- Decrease mapped sequence wait time
-vim.o.confirm = true    -- Always confirm
+vim.o.timeoutlen = 500  -- Decrease mapped sequence wait time
 vim.o.mouse = 'a'       -- Enable mouse
 vim.o.undofile = true   -- Save undo history
 
@@ -29,7 +28,8 @@ vim.o.smarttab = true  -- <BS> removes shiftwidth spaces
 
 -- UI
 -- Color
-vim.o.termguicolors = true -- enable 24 bit colors
+vim.o.termguicolors = true  -- enable 24 bit colors
+vim.g.have_nerd_font = true -- enable nerd fonts
 
 -- Sane UI options
 vim.o.number = false            -- do not show line numbers
@@ -88,3 +88,16 @@ vim.o.hlsearch = true   -- highlight matches
 vim.o.ignorecase = true -- case insensitive searching
 vim.o.more = true       -- Stop in list
 vim.o.smartcase = true  -- override ignorecase if upper case typed
+
+-- Plugins
+require("config.lazy")
+
+-- LSP
+require("config.lsp")
+
+
+
+
+-- Keymaps
+require("config.keymaps")
+

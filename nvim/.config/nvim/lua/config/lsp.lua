@@ -1,6 +1,8 @@
--- Source: https://github.com/SpectreFury/nvim-config/blob/master/lua/core/lsp.lua
+-- Enable lsp debug log
+-- vim.lsp.set_log_level("debug")
 
 vim.lsp.enable({ "luals", "clangd", "pyright" })
+-- vim.lsp.enable({ "luals"})
 
 vim.diagnostic.config({
   virtual_text = false,
@@ -27,43 +29,27 @@ vim.diagnostic.config({
 
 -- Set some defaults on LSP attach
 vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(args)
-
-    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', 'grn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     -- When cursor stops moving: Highlights all instances of the symbol under the cursor
     if client:supports_method('textDocument/documentHighlight') then
-      local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
-      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      local autocmd = vim.api.nvim_create_autocmd
+      local augroup = vim.api.nvim_create_augroup('lsp_highlight', {clear = false})
+      local bufnr = vim.api.nvim_get_current_buf()
+
+      vim.api.nvim_clear_autocmds({buffer = bufnr, group = augroup})
+
+      autocmd({'CursorHold'}, {
+        group = augroup,
         buffer = args.buf,
-        group = highlight_augroup,
         callback = vim.lsp.buf.document_highlight,
       })
-      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-        buffer = args.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.clear_references,
-      })
 
-      -- When LSP detaches: Clears the highlighting
-      vim.api.nvim_create_autocmd("LspDetach", {
-        group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
-        callback = function(event2)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
-        end,
+      autocmd({'CursorMoved'}, {
+        group = augroup,
+        buffer = args.buf,
+        callback = vim.lsp.buf.clear_references,
       })
     end
   end,
