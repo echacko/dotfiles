@@ -5,7 +5,7 @@
 # zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/ebin/.oh-my-zsh/"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -74,21 +74,10 @@ ENABLE_CORRECTION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git tmux fzf fast-syntax-highlighting zsh-autosuggestions)
 
-
-# Tmux integration for iTerm2
-# Set '-CC' option for iTerm2 tmux integration
-ZSH_TMUX_ITERM2=1
-
-# Load homebrew, so that the PATH has brew kegs.
-if [ -x /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  echo '[oh-my-zsh] homebrew not found, please install it from https://brew.sh'
-fi
-
 source $ZSH/oh-my-zsh.sh
 
-if (( $+commands[zoxide] )); then
+if [ -x $HOME/.local/bin/zoxide ]; then
+  export PATH=$PATH:$HOME/.local/bin/
   eval "$(zoxide init --cmd j zsh)"
 else
   echo '[oh-my-zsh] zoxide not found, please install it from https://github.com/ajeetdsouza/zoxide'
@@ -97,7 +86,7 @@ fi
 # User configuration
 
 # FZF
-if [ -x /opt/homebrew/bin/fzf ]; then
+if [ -x ~/.fzf/bin/fzf ]; then
   source <(fzf --zsh)
 else
   echo '[oh-my-zsh] fzf not found, please install it from https://github.com/junegunn/fzz'
@@ -162,6 +151,29 @@ print(eval("$*"))
 EOF
 }
 
+# Activate python venv
+if [ -d $HOME/anaconda3/envs/wiser ]; then
+  # source $HOME/anaconda3/envs/wiser/bin/activate
+else
+  echo "[ZSHRC ERROR] $HOME/anaconda3/envs/wiser directory not found!!!"
+fi
+
+# TeXLive
+if [ -d /home/echacko/.local/texlive/2025 ]; then
+   PATH=/home/echacko/.local/texlive/2025/bin/x86_64-linux:$PATH
+   MANPATH=/home/echacko/.local/texlive/2025/texmf-dist/doc/man:MANPATH; export MANPATH 
+   INFOPATH=/home/echacko/.local/texlive/2025/texmf-dist/doc/info:INFOPATH; export INFOPATH
+fi
+
+# Nokia setups
+# Enable proxy
+if [ -f $HOME/.http_proxy ]; then
+  source $HOME/.http_proxy
+else
+  echo "[ZSHRC ERROR] $HOME/.http_proxy file not found!!!"
+fi
+
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -178,8 +190,6 @@ alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
 alias xo='~/dotfiles/Scripts/Scripts/xo.sh '
-alias a="export XLA_FLAGS=--xla_gpu_cuda_data_dir=/opt/cuda && source ~/anaconda3/bin/activate"
-alias activate_conda="source ~/anaconda3/bin/activate"
 alias activate_proxy="source ~/Scripts/activate_proxy.sh"
 alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/dotfiles/Scripts/Scripts/extract.sh'
@@ -188,7 +198,9 @@ alias calc="="
 alias cat=bat
 alias ran1_download="python ~/dotfiles/Scripts/Scripts/ran1_download.py "
 alias convert-and-save="bash ~/dotfiles/Scripts/Scripts/convert_and_save.sh "
-alias ssh-iitb-tunnel="ssh -C -L 8080:localhost:8080 echacko@www.ee.iitb.ac.in"
+alias activate_conda="source ~/anaconda3/bin/activate"
+alias docker="podman"
 
-# Profiling 
-# zprof
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
