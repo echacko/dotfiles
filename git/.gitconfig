@@ -24,25 +24,25 @@
 	editor = /usr/bin/vim
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
-   sshCommand = /usr/bin/ssh -o LogLevel=QUIET
-   preloadIndex = true
-   untrackedCache = true
-   fsmonitor = true
+	sshCommand = /usr/bin/ssh -o LogLevel=QUIET
+	preloadIndex = true
+	untrackedCache = true
+	fsmonitor = true
 [pull]
 	rebase = true
-   recurseSubmodules = true
+	recurseSubmodules = true
 [submodule]
 	recurse = true
 [diff]
-	tool = vimdiff
+	tool = meld
 [difftool]
 	prompt = false
 [alias]
 	st = status -sbuno --ignore-submodules
 	ci = commit -v
 	last = log -1 HEAD
-   l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph --date=format:'%Y-%m-%d %H:%M:%S'
-   d = diff -p
+	l = log --pretty=format:'%C(yellow)%h%C(magenta)%d%Creset %s %C(cyan)%cr %C(bold blue)<%an>%Creset' --graph --date=format:'%Y-%m-%d %H:%M:%S'
+	d = diff -p
 	dt = difftool
 	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
 [credential]
