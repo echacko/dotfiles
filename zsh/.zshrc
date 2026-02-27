@@ -76,17 +76,19 @@ plugins=(git tmux fzf fast-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
-if [ -x $HOME/.local/bin/zoxide ]; then
+# User configuration
+
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init --cmd j zsh)"
+elif [ -x $HOME/.local/bin/zoxide ]; then
   export PATH=$PATH:$HOME/.local/bin/
   eval "$(zoxide init --cmd j zsh)"
 else
   echo '[oh-my-zsh] zoxide not found, please install it from https://github.com/ajeetdsouza/zoxide'
 fi
 
-# User configuration
-
 # FZF
-if [ -x ~/.fzf/bin/fzf ]; then
+if command -v fzf >/dev/null 2>&1; then
   source <(fzf --zsh)
 else
   echo '[oh-my-zsh] fzf not found, please install it from https://github.com/junegunn/fzz'
@@ -135,7 +137,7 @@ alias grep='grep --color=auto'
 export LESS="-R"
 
 # lesspip
-if [ -x /usr/bin/lesspipe ]; then
+if command -v lesspip > /dev/null 2>&1; then
     eval "$(lesspipe)"
 fi
 
@@ -151,36 +153,12 @@ print(eval("$*"))
 EOF
 }
 
-# Activate python venv
-if [ -d $HOME/anaconda3/envs/wiser ]; then
-  # source $HOME/anaconda3/envs/wiser/bin/activate
-else
-  echo "[ZSHRC ERROR] $HOME/anaconda3/envs/wiser directory not found!!!"
-fi
-
-# TeXLive
-if [ -d /home/echacko/.local/texlive/2025 ]; then
-   PATH=/home/echacko/.local/texlive/2025/bin/x86_64-linux:$PATH
-   MANPATH=/home/echacko/.local/texlive/2025/texmf-dist/doc/man:MANPATH; export MANPATH 
-   INFOPATH=/home/echacko/.local/texlive/2025/texmf-dist/doc/info:INFOPATH; export INFOPATH
-fi
-
-# Nokia setups
-# Enable proxy
-if [ -f $HOME/.http_proxy ]; then
-  source $HOME/.http_proxy
-else
-  echo "[ZSHRC ERROR] $HOME/.http_proxy file not found!!!"
-fi
-
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 alias vi="nvim"
-alias chromeOverTor='chromium --proxy-server="socks://127.0.0.1:9050"'
 alias ssh="ssh -Y"
 alias rm="rm -i"
 alias cp="cp -i"
@@ -189,18 +167,9 @@ alias h='history'
 alias ..='cd ..'
 alias cd..='cd ..'
 alias df='df -h'
-alias xo='~/dotfiles/Scripts/Scripts/xo.sh '
-alias activate_proxy="source ~/Scripts/activate_proxy.sh"
-alias deactivate_proxy="source ~/Scripts/deactivate_proxy.sh"
 alias extract='~/dotfiles/Scripts/Scripts/extract.sh'
-alias convert-to-pdf="libreoffice --headless --convert-to pdf "
 alias calc="="
 alias cat=bat
-alias ran1_download="python ~/dotfiles/Scripts/Scripts/ran1_download.py "
-alias convert-and-save="bash ~/dotfiles/Scripts/Scripts/convert_and_save.sh "
 alias activate_conda="source ~/anaconda3/bin/activate"
 alias docker="podman"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
